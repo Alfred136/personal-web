@@ -1,0 +1,21 @@
+import Link from 'next/link';
+
+export default function About() {
+  return (
+    <main>
+      <section>
+        <div>
+          <h2>Hero</h2>
+        </div>
+      </section>
+      <section>
+        <div>
+          <h2>About</h2>
+          <Link href={'/home'}> to home</Link>
+          <Link href={'/projects'}> to projects</Link>
+          <Link href={'/contact'}> to contact</Link>
+        </div>
+      </section>
+    </main>
+  );
+}
