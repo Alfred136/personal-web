@@ -25,7 +25,8 @@ const COIN_BOUNCE_START_POSITION_Y = -50;
 const COIN_BOUNCE_END_POSITION_Y = 0;
 
 const SCROLL_Y_THRESHOLD = 90;
-const PROGRESS_BAR_ANIMATION_DURATION = 300;
+const PROGRESS_BAR_SHOW_ANIMATION_DURATION = 300;
+const PROGRESS_BAR_MOVE_ANIMATION_DURATION = 500;
 const ERROR_MESSAGE_TABS_NOT_FOUND = '💣 Error: tabs not found.';
 
 enum CharacterAnimation {
@@ -67,6 +68,11 @@ interface CharacterProps {
   characterAnimationDuration: number;
   characterPositionX: number;
   handleCharacterTransitionEnd: () => void;
+}
+
+interface ProgressBarProps {
+  scrollProgress: number;
+  isProgressBarVisible: boolean;
 }
 
 const characterAnimationSource: Record<CharacterAnimation, StaticImageData> = {
@@ -124,7 +130,7 @@ const Character = (props: CharacterProps) => {
       width={CHARACTER_WIDTH}
       height={CHARACTER_HEIGHT}
       unoptimized={true}
-      className={`absolute left-0 bottom-0 ease-out`}
+      className={`absolute left-0 bottom-[13px] ease-out`}
       style={{
         transform: `translateX(${characterPositionX}px)`,
         transitionDuration: `${characterAnimation === CharacterAnimation.Idle ? '0ms' : `${characterAnimationDuration}ms`}`
@@ -156,7 +162,6 @@ const Coin = (props: CoinProps) => {
     activeCoinIndex === activeTabIndex &&
     activeCoinIndex === tabIndex &&
     characterAnimation === CharacterAnimation.Idle;
-  // && coinPositionY !== COIN_BOUNCE_END_POSITION_Y;
 
   return (
     <Image
@@ -164,11 +169,10 @@ const Coin = (props: CoinProps) => {
       alt={COIN_ALT}
       width={COIN_WIDTH}
       height={COIN_HEIGHT}
-      className={`ease-out 
-        ${activeCoinIndex !== tabIndex && 'opacity-0'} 
-        ${isCharacterStoppedOnCoin() ? `duration-${COIN_BOUNCE_ANIMATION_DURATION}` : `duration-${COIN_ANIMATION_DURATION}`}`}
+      className={`ease-out ${activeCoinIndex !== tabIndex && 'opacity-0'}`}
       style={{
-        transform: `${isCharacterStoppedOnCoin() ? `translateY(${coinPositionY}px)` : 'none'}`
+        transform: `${isCharacterStoppedOnCoin() ? `translateY(${coinPositionY}px)` : 'none'}`,
+        transitionDuration: `${isCharacterStoppedOnCoin() ? `${COIN_BOUNCE_ANIMATION_DURATION}ms` : `${COIN_ANIMATION_DURATION}ms`}`
       }}
       onTransitionEnd={() => handleCoinTransitionEnd()}
     />
@@ -193,7 +197,7 @@ const TabItem = (props: TabItemProps) => {
       key={`tab-${item.id}`}
       href={item.link}
       className={`relative flex items-center 
-        pl-2 pr-1 text-[14px] text-night font-pixel xs:pr-4 xs:text-[16px]
+        pt-4 pb-3 pl-2 pr-1 text-[14px] text-night font-pixel xs:pr-4 xs:text-[16px]
         hover:text-midnight`}
       onClick={() => handleTabClick(index)}
       onMouseEnter={() => handleMouseEnter(index)}
@@ -205,13 +209,33 @@ const TabItem = (props: TabItemProps) => {
   );
 };
 
-export function Navbar() {
+/**
+ * A progress bar in the bottom of the NavBar
+ *
+ * @component
+ * visible after some scrolling
+ */
+const ProgressBar = (props: ProgressBarProps) => {
+  const { scrollProgress, isProgressBarVisible } = props;
+  return (
+    <div
+      className={'absolute left-0 bottom-[-1px] bg-evening ease-out'}
+      style={{
+        width: `${scrollProgress}%`,
+        height: isProgressBarVisible ? '4px' : '0',
+        transitionDuration: `${isProgressBarVisible ? `${PROGRESS_BAR_MOVE_ANIMATION_DURATION}ms` : `${PROGRESS_BAR_SHOW_ANIMATION_DURATION}ms`}`
+      }}
+    />
+  );
+};
+
+export function NavBar() {
   const pathName = usePathname();
   const tabsRefs = useRef(
     Array.from({ length: tabs.length }, () => createRef<HTMLAnchorElement>())
   );
   const characterRef = useRef<HTMLImageElement>(null);
-  const [isShowingShadow, setIsShowingShadow] = useState(false);
+  const [isProgressBarVisible, setIsProgressBarVisible] = useState(false);
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [characterPositionX, setCharacterPositionX] = useState(0);
   const [characterAnimation, setCharacterAnimation] = useState(CharacterAnimation.Idle);
@@ -219,16 +243,32 @@ export function Navbar() {
   const [activeCoinIndex, setActiveCoinIndex] = useState(-1);
   const [coinPositionY, setCoinPositionY] = useState(0);
   const [coinAnimationTimeout, setCoinAnimationTimeout] = useState<NodeJS.Timeout | null>(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
-    const handleShadow = () => setIsShowingShadow(window.scrollY >= SCROLL_Y_THRESHOLD);
+    const handleShadow = () => setIsProgressBarVisible(window.scrollY >= SCROLL_Y_THRESHOLD);
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      const scrollableDistance = documentHeight - windowHeight;
+      const currentScrollPercentage = (scrollY / scrollableDistance) * 100;
+      setScrollProgress(currentScrollPercentage);
+    };
+
     window.addEventListener('scroll', handleShadow);
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleShadow);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
+  // when url changes, update active tab, character position and coin appearance
   useEffect(() => {
-    // set active tab, character position and coin appearance based on url changes
     const tabIndex = tabs.findIndex((tab) => tab.link === pathName);
-    if (tabIndex === activeTabIndex) return;
+    if (tabIndex === activeTabIndex || tabIndex === -1) return;
     setActiveCoinIndex(tabIndex);
     handleTabChange(tabIndex);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -304,8 +344,8 @@ export function Navbar() {
     characterAnimation === CharacterAnimation.RunningRight;
 
   return (
-    <div id='navbar' className={'fixed top-0 z-50 w-full bg-afternoon'}>
-      <div id='navbar-content' className='max-w-[1100px] w-full m-auto py-4 px-6 xs:px-10'>
+    <div id='navbar' className={'fixed top-0 z-50 w-full h-14 bg-afternoon'}>
+      <div id='navbar-content' className='max-w-[1100px] w-full m-auto px-6 xs:px-10'>
         <div id='navbar-tabs' className='relative flex items-center'>
           {tabs.map((item, index) => (
             <TabItem
@@ -337,11 +377,7 @@ export function Navbar() {
         </div>
         {/* NOTE: Add a platform? (glass ground) */}
       </div>
-      {/* TODO: Implement a progress bar */}
-      <div
-        className={`w-full bg-evening ease-in-out duration-${PROGRESS_BAR_ANIMATION_DURATION} 
-          ${isShowingShadow ? 'h-1' : 'h-0'}`}
-      />
+      <ProgressBar scrollProgress={scrollProgress} isProgressBarVisible={isProgressBarVisible} />
     </div>
   );
 }
