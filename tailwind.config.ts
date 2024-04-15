@@ -1,19 +1,16 @@
 import type { Config } from 'tailwindcss';
 
 const config: Config = {
-  content: [
-    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
-    './src/app/**/*.{js,ts,jsx,tsx,mdx}'
-  ],
+  content: ['./src/components/**/*.{js,ts,jsx,tsx,mdx}', './src/app/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
     extend: {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))'
+        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))'
       },
       fontFamily: {
-        pixel: 'Pixelify Sans, sans-serif'
+        heading: 'Pixelify Sans, sans-serif',
+        subHeading: 'VT323, sans-serif'
       },
       colors: {
         midnight: '#272744',

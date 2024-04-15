@@ -1,20 +1,25 @@
-import Link from 'next/link';
+'use client';
+
+import { Hero } from './components/hero';
+import { Skills } from './components/skills';
+import { Featured } from './components/featured';
 
 export default function HomePage() {
   return (
     <main>
-      <section>
-        <div>
-          <h2>Hero</h2>
-        </div>
+      <section
+        id='home-hero'
+        className='relative max-w-none min-h-[800px] h-screen w-full overflow-hidden md:h-[800px]'
+      >
+        <Hero />
       </section>
-      <section>
-        <div>
-          <h2>Home</h2>
-          <Link href={'/about'}> to about</Link>
-          <Link href={'/projects'}> to projects</Link>
-          <Link href={'/contact'}> to contact</Link>
-        </div>
+
+      <section id='home-skills'>
+        <Skills />
+      </section>
+
+      <section id='home-featured'>
+        <Featured />
       </section>
     </main>
   );
