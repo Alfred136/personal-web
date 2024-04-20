@@ -19,14 +19,14 @@ const CHARACTER_ANIMATION_DURATION_MULTIPLIER = 7;
 const COIN_ALT = 'gold coin';
 const COIN_WIDTH = 20;
 const COIN_HEIGHT = 20;
-const COIN_ANIMATION_DURATION = 300;
-const COIN_BOUNCE_ANIMATION_DURATION = 300;
+const COIN_ANIMATION_DURATION_MS = 300;
+const COIN_BOUNCE_ANIMATION_DURATION_MS = 300;
 const COIN_BOUNCE_START_POSITION_Y = -50;
 const COIN_BOUNCE_END_POSITION_Y = 0;
 
 const SCROLL_Y_THRESHOLD = 90;
-const PROGRESS_BAR_SHOW_ANIMATION_DURATION = 300;
-const PROGRESS_BAR_MOVE_ANIMATION_DURATION = 500;
+const PROGRESS_BAR_SHOW_ANIMATION_DURATION_MS = 300;
+const PROGRESS_BAR_MOVE_ANIMATION_DURATION_MS = 500;
 const ERROR_MESSAGE_TABS_NOT_FOUND = '💣 Error: tabs not found.';
 
 enum CharacterAnimation {
@@ -75,7 +75,7 @@ interface ProgressBarProps {
   isProgressBarVisible: boolean;
 }
 
-const characterAnimationSource: Record<CharacterAnimation, StaticImageData> = {
+const CHARACTER_ANIMATION_SOURCE: Record<CharacterAnimation, StaticImageData> = {
   [CharacterAnimation.Idle]: marioIdle,
   [CharacterAnimation.LookLeft]: marioRunningLeft,
   [CharacterAnimation.LookRight]: marioRunningRight,
@@ -83,7 +83,7 @@ const characterAnimationSource: Record<CharacterAnimation, StaticImageData> = {
   [CharacterAnimation.RunningRight]: marioRunningRight
 };
 
-const tabs: Array<TabItem> = [
+const TABS: Array<TabItem> = [
   {
     id: 'home',
     label: 'Home',
@@ -125,7 +125,7 @@ const Character = (props: CharacterProps) => {
   return (
     <Image
       ref={characterRef}
-      src={characterAnimationSource[characterAnimation]}
+      src={CHARACTER_ANIMATION_SOURCE[characterAnimation]}
       alt={CHARACTER_ALT}
       width={CHARACTER_WIDTH}
       height={CHARACTER_HEIGHT}
@@ -169,10 +169,11 @@ const Coin = (props: CoinProps) => {
       alt={COIN_ALT}
       width={COIN_WIDTH}
       height={COIN_HEIGHT}
+      unoptimized={true}
       className={`ease-out ${activeCoinIndex !== tabIndex && 'opacity-0'}`}
       style={{
         transform: `${isCharacterStoppedOnCoin() ? `translateY(${coinPositionY}px)` : 'none'}`,
-        transitionDuration: `${isCharacterStoppedOnCoin() ? `${COIN_BOUNCE_ANIMATION_DURATION}ms` : `${COIN_ANIMATION_DURATION}ms`}`
+        transitionDuration: `${isCharacterStoppedOnCoin() ? `${COIN_BOUNCE_ANIMATION_DURATION_MS}ms` : `${COIN_ANIMATION_DURATION_MS}ms`}`
       }}
       onTransitionEnd={() => handleCoinTransitionEnd()}
     />
@@ -223,7 +224,7 @@ const ProgressBar = (props: ProgressBarProps) => {
       style={{
         width: `${scrollProgress}%`,
         height: isProgressBarVisible ? '4px' : '0',
-        transitionDuration: `${isProgressBarVisible ? `${PROGRESS_BAR_MOVE_ANIMATION_DURATION}ms` : `${PROGRESS_BAR_SHOW_ANIMATION_DURATION}ms`}`
+        transitionDuration: `${isProgressBarVisible ? `${PROGRESS_BAR_MOVE_ANIMATION_DURATION_MS}ms` : `${PROGRESS_BAR_SHOW_ANIMATION_DURATION_MS}ms`}`
       }}
     />
   );
@@ -232,7 +233,7 @@ const ProgressBar = (props: ProgressBarProps) => {
 export function NavBar() {
   const pathName = usePathname();
   const tabsRefs = useRef(
-    Array.from({ length: tabs.length }, () => createRef<HTMLAnchorElement>())
+    Array.from({ length: TABS.length }, () => createRef<HTMLAnchorElement>())
   );
   const characterRef = useRef<HTMLImageElement>(null);
   const [isProgressBarVisible, setIsProgressBarVisible] = useState(false);
@@ -246,7 +247,6 @@ export function NavBar() {
   const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
-    const handleShadow = () => setIsProgressBarVisible(window.scrollY >= SCROLL_Y_THRESHOLD);
     const handleScroll = () => {
       const scrollY = window.scrollY;
       const windowHeight = window.innerHeight;
@@ -254,20 +254,19 @@ export function NavBar() {
       const scrollableDistance = documentHeight - windowHeight;
       const currentScrollPercentage = (scrollY / scrollableDistance) * 100;
       setScrollProgress(currentScrollPercentage);
+      setIsProgressBarVisible(window.scrollY >= SCROLL_Y_THRESHOLD);
     };
 
-    window.addEventListener('scroll', handleShadow);
     window.addEventListener('scroll', handleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleShadow);
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
   // when url changes, update active tab, character position and coin appearance
   useEffect(() => {
-    const tabIndex = tabs.findIndex((tab) => tab.link === pathName);
+    const tabIndex = TABS.findIndex((tab) => tab.link === pathName);
     if (tabIndex === activeTabIndex || tabIndex === -1) return;
     setActiveCoinIndex(tabIndex);
     handleTabChange(tabIndex);
@@ -345,9 +344,9 @@ export function NavBar() {
 
   return (
     <div id='navbar' className={'fixed top-0 z-50 w-full h-14 bg-afternoon'}>
-      <div id='navbar-content' className='max-w-[1100px] w-full m-auto px-6 xs:px-10'>
+      <div id='navbar-content' className='max-w-[1100px] w-full m-auto px-[calc(8px+2vw)]'>
         <div id='navbar-tabs' className='relative flex items-center'>
-          {tabs.map((item, index) => (
+          {TABS.map((item, index) => (
             <TabItem
               key={item.id}
               item={item}
