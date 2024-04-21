@@ -22,7 +22,7 @@ interface SkillBoardProps extends SkillCategory {}
 const SkillBoard = (props: SkillBoardProps) => {
   const { name, skills } = props;
   return (
-    <div className='flex flex-col max-w-[250px] w-full xs:w-5/12 sm:w-1/3  h-[250px] box-border border-2 border-afternoon bg-night px-4'>
+    <div className='flex flex-col max-w-[250px] w-full min-h-[250px] px-4 py-1 box-border border-2 border-afternoon bg-night ss:w-5/12 sm:w-1/3'>
       <div className='text-[20px] text-center uppercase'>{name}</div>
       <div className='w-full h-[2px] my-1 bg-sunset' />
       {skills.map((skill) => (
@@ -36,7 +36,7 @@ export const Skills = () => {
   return (
     <div className='flex flex-col items-center gap-4 text-center'>
       <h1>{HEADING}</h1>
-      <div className='flex flex-wrap gap-5 sm:gap-10 items-center justify-center w-full'>
+      <div className='flex flex-wrap items-stretch gap-5 sm:gap-10 justify-center w-full'>
         {SKILL_CATEGORIES.map((category) => (
           <SkillBoard key={category.name} name={category.name} skills={category.skills} />
         ))}

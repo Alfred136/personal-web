@@ -1,19 +1,10 @@
-import Link from 'next/link';
+import { ProjectList } from './components/project-list';
 
-export default function About() {
+export default function Projects() {
   return (
     <main>
-      <section>
-        <div>
-          <h2>Hero</h2>
-        </div>
-      </section>
-      <section>
-        <div>
-          <h2>Projects</h2>
-          <Link href={'/home'}> to home</Link>
-          <Link href={'/about'}> to about</Link>\ <Link href={'/contact'}> to contact</Link>
-        </div>
+      <section id='projects-list' className='pt-20'>
+        <ProjectList />
       </section>
     </main>
   );

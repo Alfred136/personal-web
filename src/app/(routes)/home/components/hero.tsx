@@ -111,9 +111,9 @@ const Introduction = () => {
 
 const ButtonGroup = () => {
   return (
-    <div className='flex gap-5'>
-      <Button title={RESUME} link={RESUME_LINK} target='_blank' />
-      <Button title={CONTACT} link={CONTACT_LINK} />
+    <div className='w-full flex flex-wrap gap-4 justify-center md:justify-start'>
+      <Button title={RESUME} link={RESUME_LINK} />
+      <Button title={CONTACT} link={CONTACT_LINK} target='_self' />
     </div>
   );
 };

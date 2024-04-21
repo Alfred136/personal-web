@@ -6,16 +6,22 @@ interface ButtonProps {
   title: string;
   link: string;
   target?: Target;
+  className?: string;
 }
 
 export function Button(props: ButtonProps) {
-  const { title, link, target } = props;
+  const { title, link, target, className } = props;
 
   return (
-    <Link href={link} target={target ?? '_self'} className='relative'>
+    <Link
+      href={link}
+      target={target ?? '_blank'}
+      className={`relative min-w-full xs:min-w-[100px] ${className ?? ''}`}
+    >
       <button
-        className='relative z-20 min-w-[100px] px-4 py-2 bg-sunset text-center
-       hover:bg-evening hover:translate-x-[-2px] hover:translate-y-[2px]'
+        className='relative z-20 w-full py-1 bg-sunset text-center text-morning
+       hover:bg-evening hover:translate-x-[-2px] hover:translate-y-[2px]
+        xs:px-2 ss:px-4 ss:py-2'
       >
         {title}
       </button>
