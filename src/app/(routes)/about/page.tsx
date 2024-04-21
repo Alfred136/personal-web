@@ -1,20 +1,25 @@
-import Link from 'next/link';
+import { Overview } from './components/overview';
+import { Story } from './components/story';
+import { Skills } from './components/skills';
+import { Books } from './components/books';
 
 export default function About() {
   return (
     <main>
-      <section>
-        <div>
-          <h2>Hero</h2>
-        </div>
+      <section id='about-overview' className='pt-20'>
+        <Overview />
       </section>
-      <section>
-        <div>
-          <h2>About</h2>
-          <Link href={'/home'}> to home</Link>
-          <Link href={'/projects'}> to projects</Link>
-          <Link href={'/contact'}> to contact</Link>
-        </div>
+
+      <section id='about-story'>
+        <Story />
+      </section>
+
+      <section id='about-skills'>
+        <Skills />
+      </section>
+
+      <section id='about-books'>
+        <Books />
       </section>
     </main>
   );
