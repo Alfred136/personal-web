@@ -1,19 +1,16 @@
 'use client';
 
 import React, { useState, useEffect, useRef, createRef } from 'react';
-import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import Image, { StaticImageData } from 'next/image';
-import marioFront from '/public/mario_front.png';
-import marioIdle from '/public/mario_idle.gif';
-import marioRunningLeft from '/public/mario_running_left.gif';
-import marioRunningRight from '/public/mario_running_right.gif';
-import coinSpinning from '/public/coin_spinning.gif';
+import Image, { type StaticImageData } from 'next/image';
+import { usePathname } from 'next/navigation';
+import { marioIdleGif, marioRunningLeftGif, marioRunningRightGif } from '#/images/mario';
+import { coinSpinningGif } from '#/images/others';
 
 // global constants
 const CHARACTER_ALT = 'mario';
-const CHARACTER_WIDTH = 28;
-const CHARACTER_HEIGHT = 28;
+const CHARACTER_WIDTH = 24;
+const CHARACTER_HEIGHT = 24;
 const CHARACTER_ANIMATION_DURATION_MULTIPLIER = 7;
 
 const COIN_ALT = 'gold coin';
@@ -63,6 +60,7 @@ interface CoinProps {
 }
 
 interface CharacterProps {
+  showCharacter: boolean;
   characterRef: React.RefObject<HTMLImageElement>;
   characterAnimation: CharacterAnimation;
   characterAnimationDuration: number;
@@ -72,22 +70,22 @@ interface CharacterProps {
 
 interface ProgressBarProps {
   scrollProgress: number;
-  isProgressBarVisible: boolean;
+  showProgressBar: boolean;
 }
 
 const CHARACTER_ANIMATION_SOURCE: Record<CharacterAnimation, StaticImageData> = {
-  [CharacterAnimation.Idle]: marioIdle,
-  [CharacterAnimation.LookLeft]: marioRunningLeft,
-  [CharacterAnimation.LookRight]: marioRunningRight,
-  [CharacterAnimation.RunningLeft]: marioRunningLeft,
-  [CharacterAnimation.RunningRight]: marioRunningRight
+  [CharacterAnimation.Idle]: marioIdleGif,
+  [CharacterAnimation.LookLeft]: marioRunningLeftGif,
+  [CharacterAnimation.LookRight]: marioRunningRightGif,
+  [CharacterAnimation.RunningLeft]: marioRunningLeftGif,
+  [CharacterAnimation.RunningRight]: marioRunningRightGif
 };
 
 const TABS: Array<TabItem> = [
   {
     id: 'home',
     label: 'Home',
-    link: '/home'
+    link: '/'
   },
   {
     id: 'about',
@@ -116,6 +114,7 @@ const TABS: Array<TabItem> = [
  */
 const Character = (props: CharacterProps) => {
   const {
+    showCharacter,
     characterRef,
     characterAnimation,
     characterAnimationDuration,
@@ -130,7 +129,7 @@ const Character = (props: CharacterProps) => {
       width={CHARACTER_WIDTH}
       height={CHARACTER_HEIGHT}
       unoptimized={true}
-      className={`absolute left-0 bottom-[13px] ease-out`}
+      className={`absolute left-1 ease-out ${!showCharacter ? 'hidden' : ''}`}
       style={{
         transform: `translateX(${characterPositionX}px)`,
         transitionDuration: `${characterAnimation === CharacterAnimation.Idle ? '0ms' : `${characterAnimationDuration}ms`}`
@@ -165,12 +164,12 @@ const Coin = (props: CoinProps) => {
 
   return (
     <Image
-      src={coinSpinning}
+      src={coinSpinningGif}
       alt={COIN_ALT}
       width={COIN_WIDTH}
       height={COIN_HEIGHT}
       unoptimized={true}
-      className={`ease-out ${activeCoinIndex !== tabIndex && 'opacity-0'}`}
+      className={`ease-out ${activeCoinIndex !== tabIndex ? 'opacity-0' : ''}`}
       style={{
         transform: `${isCharacterStoppedOnCoin() ? `translateY(${coinPositionY}px)` : 'none'}`,
         transitionDuration: `${isCharacterStoppedOnCoin() ? `${COIN_BOUNCE_ANIMATION_DURATION_MS}ms` : `${COIN_ANIMATION_DURATION_MS}ms`}`
@@ -198,8 +197,8 @@ const TabItem = (props: TabItemProps) => {
       key={`tab-${item.id}`}
       href={item.link}
       className={`relative flex items-center 
-        pt-4 pb-3 pl-2 pr-1 text-[14px] text-night font-pixel xs:pr-4 xs:text-[16px]
-        hover:text-midnight`}
+        pt-4 pb-3 pl-2 pr-1 text-[16px] text-morning xs:pr-4 xs:text-[18px]
+        hover:text-afternoon`}
       onClick={() => handleTabClick(index)}
       onMouseEnter={() => handleMouseEnter(index)}
       onMouseLeave={() => handleMouseLeave(index)}
@@ -217,26 +216,26 @@ const TabItem = (props: TabItemProps) => {
  * visible after some scrolling
  */
 const ProgressBar = (props: ProgressBarProps) => {
-  const { scrollProgress, isProgressBarVisible } = props;
+  const { scrollProgress, showProgressBar } = props;
   return (
     <div
       className={'absolute left-0 bottom-[-1px] bg-evening ease-out'}
       style={{
         width: `${scrollProgress}%`,
-        height: isProgressBarVisible ? '4px' : '0',
-        transitionDuration: `${isProgressBarVisible ? `${PROGRESS_BAR_MOVE_ANIMATION_DURATION_MS}ms` : `${PROGRESS_BAR_SHOW_ANIMATION_DURATION_MS}ms`}`
+        height: showProgressBar ? '4px' : '0',
+        transitionDuration: `${showProgressBar ? `${PROGRESS_BAR_MOVE_ANIMATION_DURATION_MS}ms` : `${PROGRESS_BAR_SHOW_ANIMATION_DURATION_MS}ms`}`
       }}
     />
   );
 };
 
-export function NavBar() {
+export const NavigationBar = () => {
   const pathName = usePathname();
   const tabsRefs = useRef(
     Array.from({ length: TABS.length }, () => createRef<HTMLAnchorElement>())
   );
   const characterRef = useRef<HTMLImageElement>(null);
-  const [isProgressBarVisible, setIsProgressBarVisible] = useState(false);
+  const [showProgressBar, setShowProgressBar] = useState(false);
   const [activeTabIndex, setActiveTabIndex] = useState(0);
   const [characterPositionX, setCharacterPositionX] = useState(0);
   const [characterAnimation, setCharacterAnimation] = useState(CharacterAnimation.Idle);
@@ -245,6 +244,7 @@ export function NavBar() {
   const [coinPositionY, setCoinPositionY] = useState(0);
   const [coinAnimationTimeout, setCoinAnimationTimeout] = useState<NodeJS.Timeout | null>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [showCharacter, setShowCharacter] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -254,7 +254,7 @@ export function NavBar() {
       const scrollableDistance = documentHeight - windowHeight;
       const currentScrollPercentage = (scrollY / scrollableDistance) * 100;
       setScrollProgress(currentScrollPercentage);
-      setIsProgressBarVisible(window.scrollY >= SCROLL_Y_THRESHOLD);
+      setShowProgressBar(window.scrollY >= SCROLL_Y_THRESHOLD);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -267,13 +267,22 @@ export function NavBar() {
   // when url changes, update active tab, character position and coin appearance
   useEffect(() => {
     const tabIndex = TABS.findIndex((tab) => tab.link === pathName);
-    if (tabIndex === activeTabIndex || tabIndex === -1) return;
+    if (tabIndex === -1) {
+      return;
+    }
+    // handle cases of url changes with browser, update active tab and character position while hidding character animation
+    if (activeTabIndex === 0 && !showCharacter) {
+      handleTabChange(tabIndex, false);
+      setShowCharacter(true);
+      return;
+    }
+    setShowCharacter(true);
     setActiveCoinIndex(tabIndex);
     handleTabChange(tabIndex);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathName]);
 
-  const handleTabChange = (index: number) => {
+  const handleTabChange = (index: number, showAnimation: boolean = true) => {
     if (index !== activeTabIndex) {
       const firstTabElement = tabsRefs.current[0].current;
       const targetTabElement = tabsRefs.current[index].current;
@@ -291,10 +300,13 @@ export function NavBar() {
 
       setActiveTabIndex(index);
       setCharacterPositionX(newCharacterPositionX);
-      setCharacterAnimationDuartion(newCharacterAnimationDuration);
-      setCharacterAnimation(
-        xPositionDifference > 0 ? CharacterAnimation.RunningRight : CharacterAnimation.RunningLeft
-      );
+
+      if (showAnimation) {
+        setCharacterAnimationDuartion(newCharacterAnimationDuration);
+        setCharacterAnimation(
+          xPositionDifference > 0 ? CharacterAnimation.RunningRight : CharacterAnimation.RunningLeft
+        );
+      }
     }
   };
 
@@ -343,8 +355,15 @@ export function NavBar() {
     characterAnimation === CharacterAnimation.RunningRight;
 
   return (
-    <div id='navbar' className={'fixed top-0 z-50 w-full h-14 bg-afternoon'}>
-      <div id='navbar-content' className='max-w-[1100px] w-full m-auto px-[calc(8px+2vw)]'>
+    <div id='navbar' className={'fixed top-0 z-50 w-full h-[3.125rem]'}>
+      <div
+        id='navbar-background'
+        className='absolute left-0 top-0 z-20 w-full h-full bg-midnight opacity-80'
+      />
+      <div
+        id='navbar-content'
+        className='relative z-30 max-w-[1100px] w-full m-auto px-[calc(8px+2vw)]'
+      >
         <div id='navbar-tabs' className='relative flex items-center'>
           {TABS.map((item, index) => (
             <TabItem
@@ -367,6 +386,7 @@ export function NavBar() {
             </TabItem>
           ))}
           <Character
+            showCharacter={showCharacter}
             characterRef={characterRef}
             characterAnimation={characterAnimation}
             characterPositionX={characterPositionX}
@@ -376,7 +396,7 @@ export function NavBar() {
         </div>
         {/* NOTE: Add a platform? (glass ground) */}
       </div>
-      <ProgressBar scrollProgress={scrollProgress} isProgressBarVisible={isProgressBarVisible} />
+      <ProgressBar scrollProgress={scrollProgress} showProgressBar={showProgressBar} />
     </div>
   );
-}
+};

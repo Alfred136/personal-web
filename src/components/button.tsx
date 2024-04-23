@@ -9,7 +9,7 @@ interface ButtonProps {
   className?: string;
 }
 
-export function Button(props: ButtonProps) {
+export const Button = (props: ButtonProps) => {
   const { title, link, target, className } = props;
 
   return (
@@ -19,13 +19,13 @@ export function Button(props: ButtonProps) {
       className={`relative min-w-full xs:min-w-[100px] ${className ?? ''}`}
     >
       <button
-        className='relative z-20 w-full py-1 bg-sunset text-center text-morning
+        className='relative z-30 w-full py-1 bg-sunset text-center text-morning
        hover:bg-evening hover:translate-x-[-2px] hover:translate-y-[2px]
         xs:px-2 ss:px-4 ss:py-2'
       >
         {title}
       </button>
-      <div className='absolute left-[-4px] bottom-[-4px] z-10 w-full h-full bg-night' />
+      <div className='absolute left-[-4px] bottom-[-4px] z-20 w-full h-full bg-night' />
     </Link>
   );
-}
+};

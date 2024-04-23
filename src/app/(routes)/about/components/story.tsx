@@ -1,6 +1,39 @@
 import { type ReactNode } from 'react';
 import { CodeSnippet } from '@/components/code-snippet';
 
+// global constants
+const TAG_NAME = 'story';
+const STORIES: StoryItem[] = [
+  {
+    year: '2017-2022',
+    description:
+      'The start of my Software Engineering journey. Enrolled in Computer Science Bachelor degree in City University of Hong Kong.'
+  },
+  {
+    year: '2019-2020',
+    description: 'Internship as a Junior Mobile Apps Developer.'
+  },
+  {
+    year: '2022',
+    description:
+      'My 1st full-time position as a Cloud Application Programmer. Developed web applications..'
+  },
+  {
+    year: '2023',
+    description:
+      'My 2nd full-time position as a Software Engineer specifying in-house projects. Developed Node.js servers.'
+  },
+  {
+    year: '2024-current',
+    description: 'Relocated to Toronro, looking for a new opportunity.'
+  }
+];
+
+interface StoryItem {
+  year: string;
+  description: string;
+}
+
 const StoryItemContainer = ({ children }: { children: ReactNode }) => {
   return <p className='w-full flex gap-4'>{children}</p>;
 };
@@ -13,16 +46,16 @@ interface StoryItemProps {
 const StoryItem = (props: StoryItemProps) => {
   const { year, children } = props;
   return (
-    <p className='w-full flex gap-4 text-start justify-start items-start'>
+    <div className='w-full flex gap-4 text-start justify-start items-start'>
       <span className='w-1/5'>{year}</span>
       <div className='w-4/5'>{children}</div>
-    </p>
+    </div>
   );
 };
 
 export const Story = () => {
   return (
-    <CodeSnippet tagName='story'>
+    <CodeSnippet tagName={TAG_NAME}>
       <div className='w-full flex flex-col gap-8'>
         <StoryItem year='2017-2022'>
           <p>

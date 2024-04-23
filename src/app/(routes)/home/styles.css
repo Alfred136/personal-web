@@ -17,37 +17,6 @@
 100% { transform: rotate(0.0deg) }
 }
 
-/* .wave-hand {
-  animation-name: wave-animation;
-  animation-duration: 2.5s;
-  animation-iteration-count: infinite;
-  transform-origin: 50% 50%;
-  display: inline;
-}
-
-@keyframes wave-hand-animation {
-  0% { transform: rotate(-45.0deg) }
- 10% { transform: rotate(-31.0deg) }
- 20% { transform: rotate(-53.0deg) }
- 30% { transform: rotate(-31.0deg) }
- 40% { transform: rotate(-49.0deg) }
- 50% { transform: rotate(-27.0deg) }
- 60% { transform: rotate(-45.0deg) }
-100% { transform: rotate(-45.0deg) }
-} */
-
-/* .highlight {
-  text-decoration: none;
-  box-shadow: inset 0 -2px 0 rgba(238,111,87), 0 2px 0 rgba(238,111,87);
-  transition: box-shadow .3s;
-  color: inherit;
-  overflow: hidden;
-}
-
-.highlight:hover {
-  box-shadow: inset 0 -30px 0 rgba(238,111,87, 0.9), 0 2px 0 rgba(238,111,87, 0.9);
-} */
-
 .highlight {
   text-decoration: none;
   transition: box-shadow .3s;

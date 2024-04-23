@@ -12,22 +12,25 @@ interface TagProps {
   tagName: string;
 }
 
-interface CodeSnippetExpandButtonProps {
+interface CodeSnippetExpandIconProps {
   showContent: boolean;
-  handleClick: () => void;
 }
 
 const CodeSnippetOpenTag = (props: TagProps) => {
-  return <h2>{`<${props.tagName}>`}</h2>;
+  return <h3>{`<${props.tagName}>`}</h3>;
 };
 
 const CodeSnippetCloseTag = (props: TagProps) => {
-  return <h2>{`</${props.tagName}>`}</h2>;
+  return <h3>{`</${props.tagName}>`}</h3>;
 };
 
-const CodeSnippetExpandButton = (props: CodeSnippetExpandButtonProps) => {
-  const { showContent, handleClick } = props;
-  return <button onClick={handleClick}>{showContent ? 'v' : '>'}</button>;
+const CodeSnippetExpandIcon = (props: CodeSnippetExpandIconProps) => {
+  const { showContent } = props;
+  return (
+    <h3 className={` text-afternoon duration-300 ${showContent ? 'rotate-[135deg]' : ''}`}>
+      {'+'}
+    </h3>
+  );
 };
 
 const CodeSnippetContentVerticalLine = () => {
@@ -43,18 +46,21 @@ export const CodeSnippet = (props: CodeSnippetProps) => {
   };
 
   return (
-    <div className={`max-w-[600px] m-auto ${className}`}>
-      <div className='flex gap-2'>
+    <div className={`relative z-10 max-w-[600px] flex flex-col gap-1 m-auto ${className}`}>
+      <div
+        className='w-full flex items-center gap-4 cursor-pointer bg-[#6266ae] hover:bg-night'
+        onClick={() => handleExpandBtnClick()}
+      >
         <CodeSnippetOpenTag tagName={tagName} />
-        <CodeSnippetExpandButton showContent={showContent} handleClick={handleExpandBtnClick} />
+        <CodeSnippetExpandIcon showContent={showContent} />
       </div>
 
-      {showContent && (
-        <div className='flex'>
+      {showContent ? (
+        <div className='w-full flex'>
           <CodeSnippetContentVerticalLine />
           {children}
         </div>
-      )}
+      ) : null}
 
       <CodeSnippetCloseTag tagName={tagName} />
     </div>

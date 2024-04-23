@@ -34,8 +34,10 @@ body {
 }
 
 main {
-  scroll-behavior: smooth;
+  position: relative;
+  min-height: 100vh;
   overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
 section {
@@ -53,16 +55,12 @@ h1 {
 }
 
 h2 {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
 }
 
-@media only screen and (min-width: 1060px) {
-  h1 {
-    font-size: 2.5rem;
-  }
-  h2 {
-    font-size: 1.75rem;
-  }
+h3 {
+  font-family: 'Pixelify Sans', sans-serif;
+  font-size: 1.25rem;
 }
 
 @layer utilities {
