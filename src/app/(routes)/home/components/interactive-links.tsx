@@ -131,7 +131,7 @@ const QuestionBlock = (props: QuestionBlockProps) => {
 
   return (
     <div
-      className={'relative w-[64px] h-[64px] sm:w-[80px] sm:h-[80px] md:w-[96px] md:h-[96px]'}
+      className={'relative w-[64px] h-[64px] ss:w-[80px] ss:h-[80px] md:w-[96px] md:h-[96px]'}
       onMouseEnter={() => handleMouseEnter()}
       onMouseLeave={() => handleMouseLeave()}
     >
@@ -163,7 +163,7 @@ const QuestionBlock = (props: QuestionBlockProps) => {
         width={COIN_IMAGE_WIDTH}
         height={COIN_IMAGE_HEIGHT}
         unoptimized={true}
-        className={`absolute z-0 top-0 left-[50%] translate-x-[-50%] w-[48px] h-[48px] sm:w-[56px] sm:h-[56px] md:w-[64px] md:h-[64px] 
+        className={`absolute z-0 top-0 left-[50%] translate-x-[-50%] w-[48px] h-[48px] ss:w-[56px] ss:h-[56px] md:w-[64px] md:h-[64px] 
           duration-200 ease-out ${showCoin ? 'translate-y-[-200%]' : 'opacity-0 '}`}
         onTransitionEnd={() => handleCoinTransitionEnd()}
       />
@@ -245,7 +245,7 @@ export const InteractiveLinks = () => {
           setDialogueText={setDialogueText}
         />
       </div>
-      <span className='text-[24px] text-afternoon'>{dialogueText}</span>
+      <span className='font-subheading text-[24px] text-afternoon'>{dialogueText}</span>
     </div>
   );
 };

@@ -64,9 +64,9 @@ interface Project {
 
 export const ProjectList = () => {
   return (
-    <div className='flex flex-col gap-4'>
+    <div className='flex flex-col gap-4 overflow-hidden'>
       <h2>{HEADING}</h2>
-      <div className='w-full flex flex-col items-stretch justify-between gap-10'>
+      <div className='w-full flex flex-col items-stretch justify-between gap-[100px]'>
         {PROJECTS.map((project) => (
           <ProjectCard
             key={project.id}

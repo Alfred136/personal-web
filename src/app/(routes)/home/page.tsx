@@ -29,7 +29,7 @@ export default function HomePage() {
           width={BACKGROUND_IMAGE_WIDTH}
           height={BACKGROUND_IMAGE_HEIGHT}
           unoptimized={true}
-          className='absolute top-0 left-0 z-[0] w-full h-full object-cover object-bottom opacity-25'
+          className='absolute top-0 left-0 z-[0] w-full h-full object-cover object-bottom brightness-50 opacity-50'
         />
       </section>
     </main>

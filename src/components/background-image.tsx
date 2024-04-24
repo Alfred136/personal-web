@@ -12,7 +12,7 @@ export const BackgroundImage = () => {
       alt={BACKGROUND_IMAGE_ALT}
       width={BACKGROUND_IMAGE_WIDTH}
       height={BACKGROUND_IMAGE_HEIGHT}
-      className='absolute top-0 z-[0] h-full object-cover object-right-bottom opacity-[0.07]'
+      className='absolute top-0 z-[0] h-full object-cover object-right-bottom brightness-[0.1] opacity-50'
     />
   );
 };

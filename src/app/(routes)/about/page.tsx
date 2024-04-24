@@ -11,12 +11,12 @@ export default function AboutPage() {
         <Overview />
       </section>
 
-      <section id='about-story'>
-        <Story />
-      </section>
-
       <section id='about-skills'>
         <Skills />
+      </section>
+
+      <section id='about-story'>
+        <Story />
       </section>
 
       <section id='about-books'>

@@ -130,7 +130,7 @@ const Character = (props: CharacterProps) => {
       height={CHARACTER_IMAGE_HEIGHT}
       priority={true}
       unoptimized={true}
-      className={`absolute left-1 ease-out ${!showCharacter ? 'hidden' : ''}`}
+      className={`absolute left-1 mb-[1px] ease-out ${!showCharacter ? 'hidden' : ''}`}
       style={{
         transform: `translateX(${characterPositionX}px)`,
         transitionDuration: `${characterAnimation === CharacterAnimation.Idle ? '0ms' : `${characterAnimationDuration}ms`}`
@@ -197,7 +197,7 @@ const TabItem = (props: TabItemProps) => {
       ref={tabsRefs.current[index]}
       key={`tab-${item.id}`}
       href={item.link}
-      className={`relative flex items-center pt-4 pb-3 pl-2 pr-1
+      className={`relative flex items-center pt-3 pb-2 pl-2 pr-1
         font-subheading text-[16px] text-morning xs:pr-4 xs:text-[18px]
         hover:text-afternoon`}
       onClick={() => handleTabClick(index)}
@@ -363,7 +363,7 @@ export const NavigationBar = () => {
       />
       <div
         id='navbar-content'
-        className='relative z-30 max-w-[1100px] w-full m-auto px-[calc(8px+2vw)]'
+        className='relative z-30 max-w-[1100px] w-full m-auto px-1 xs:px-[calc(8px+2vw)]'
       >
         <div id='navbar-tabs' className='relative flex items-center'>
           {TABS.map((item, index) => (
