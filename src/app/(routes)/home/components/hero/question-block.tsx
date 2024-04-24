@@ -1,13 +1,8 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 import Image, { type StaticImageData } from 'next/image';
-import {
-  coinSpinningGif,
-  questionBlockGif,
-  questionBlockPng,
-  questionBlockResumePng,
-  questionBlockGithubPng,
-  questionBlockLinkedinPng
-} from '#/images/mario';
+import { coinSpinningGif, questionBlockGif, questionBlockPng } from '#/images/mario';
 import Link from 'next/link';
 
 // global constants
@@ -18,16 +13,10 @@ const COIN_IMAGE_ALT = 'gold coin';
 const QUESTION_BLOCK_IMAGE_WIDTH = 128;
 const QUESTION_BLOCK_IMAGE_HEIGHT = 128;
 const QUESTION_BLOCK_IMAGE_ALT = 'pixel-art question block';
-const QUESTION_BLOCK_RESUME_IMAGE_ALT = 'pixel-art question block resume';
-const QUESTION_BLOCK_GITHUB_IMAGE_ALT = 'pixel-art question block github';
-const QUESTION_BLOCK_LINKEDIN_IMAGE_ALT = 'pixel-art question block linkedin';
 
 const QUESTION_BLOCK_DROP_START_POSITION_Y = 600;
 const QUESTION_BLOCK_DROP_END_POSITION_Y = 0;
 const QUESTION_BLOCK_DROP_ANIMATION_DURATION_MS = 1000;
-const QUESTION_BLOCK_1_DROP_ANIMATION_DELAY_MS = 1600;
-const QUESTION_BLOCK_2_DROP_ANIMATION_DELAY_MS = 1800;
-const QUESTION_BLOCK_3_DROP_ANIMATION_DELAY_MS = 2000;
 const QUESTION_BLOCK_BOUNCE_START_POSITION_Y = -10;
 const QUESTION_BLOCK_BOUNCE_END_POSITION_Y = 0;
 const QUESTION_BLOCK_BOUNCE_ANIMATION_DURATION_MS = 100;
@@ -53,7 +42,7 @@ interface QuestionBlockProps {
  * * onMouseLeave: cancel spinning animation and dialogue text.
  * * onClick: shows bounce animation, coin bounce animation, and reveals block item (social link).
  */
-const QuestionBlock = (props: QuestionBlockProps) => {
+export const QuestionBlock = (props: QuestionBlockProps) => {
   const {
     blockItemImage,
     blockItemAlt,
@@ -91,9 +80,7 @@ const QuestionBlock = (props: QuestionBlockProps) => {
   };
 
   const handleBlockTransitionEnd = () => {
-    if (blockPositionY !== QUESTION_BLOCK_BOUNCE_END_POSITION_Y) {
-      setBlockPositionY(QUESTION_BLOCK_BOUNCE_END_POSITION_Y);
-    }
+    setBlockPositionY(QUESTION_BLOCK_BOUNCE_END_POSITION_Y);
     // reset animation duration after one-time drop animation is complete.
     if (
       !showDropAnimation &&
@@ -175,77 +162,6 @@ const QuestionBlock = (props: QuestionBlockProps) => {
           className='absolute z-20 top-0 left-0 w-full h-full bg-transparent'
         />
       ) : null}
-    </div>
-  );
-};
-
-export const InteractiveLinks = () => {
-  const [showBlock1Item, setShowBlock1Item] = useState(false);
-  const [showBlock2Item, setShowBlock2Item] = useState(false);
-  const [showBlock3Item, setShowBlock3Item] = useState(false);
-  const [block2HitCounter, setBlock2HitCounter] = useState(0);
-  const [dialogueText, setDialogueText] = useState('');
-
-  const handleBlock1Click = () => {
-    if (!showBlock1Item) {
-      setShowBlock1Item(true);
-    }
-  };
-
-  const handleBlock2Click = () => {
-    if (showBlock2Item) return;
-
-    if (block2HitCounter === 0) {
-      setDialogueText("What's inside?");
-    } else if (block2HitCounter === 1) {
-      setDialogueText('One more time!');
-    } else if (block2HitCounter === 2) {
-      setShowBlock2Item(true);
-    }
-    setBlock2HitCounter((prev) => prev + 1);
-  };
-
-  const handleBlock3Click = () => {
-    if (!showBlock3Item) {
-      setShowBlock3Item(true);
-    }
-  };
-
-  return (
-    <div className='pt-10 flex flex-col gap-10'>
-      <div className='flex gap-10 md:gap-14'>
-        <QuestionBlock
-          blockItemName='Github'
-          blockItemLink='https://github.com/Alfred136'
-          blockItemImage={questionBlockGithubPng}
-          blockItemAlt={QUESTION_BLOCK_GITHUB_IMAGE_ALT}
-          showBlockItem={showBlock1Item}
-          dropAnimationDelay={QUESTION_BLOCK_1_DROP_ANIMATION_DELAY_MS}
-          handleBlockClick={handleBlock1Click}
-          setDialogueText={setDialogueText}
-        />
-        <QuestionBlock
-          blockItemName='Resume'
-          blockItemLink='/resumes/resume.pdf'
-          blockItemImage={questionBlockResumePng}
-          blockItemAlt={QUESTION_BLOCK_RESUME_IMAGE_ALT}
-          showBlockItem={showBlock2Item}
-          dropAnimationDelay={QUESTION_BLOCK_2_DROP_ANIMATION_DELAY_MS}
-          handleBlockClick={handleBlock2Click}
-          setDialogueText={setDialogueText}
-        />
-        <QuestionBlock
-          blockItemName='LinkedIn'
-          blockItemLink='https://www.linkedin.com/in/alfred-tse'
-          blockItemImage={questionBlockLinkedinPng}
-          blockItemAlt={QUESTION_BLOCK_LINKEDIN_IMAGE_ALT}
-          showBlockItem={showBlock3Item}
-          dropAnimationDelay={QUESTION_BLOCK_3_DROP_ANIMATION_DELAY_MS}
-          handleBlockClick={handleBlock3Click}
-          setDialogueText={setDialogueText}
-        />
-      </div>
-      <span className='font-subheading text-[24px] text-afternoon'>{dialogueText}</span>
     </div>
   );
 };

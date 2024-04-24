@@ -1,10 +1,9 @@
 import { type StaticImageData } from 'next/image';
-import { ProjectCard } from './project-card';
+import { ProjectListItem } from './project-list-item';
 import { projectFlamingoPng, projectSpli3ePng, projectOldPortfolioPng } from '#/images/projects';
 
 // global constants
 const HEADING = 'All Projects';
-
 const PROJECTS: Project[] = [
   {
     id: 'project-flamingo',
@@ -64,11 +63,14 @@ interface Project {
 
 export const ProjectList = () => {
   return (
-    <div className='flex flex-col gap-4 overflow-hidden'>
+    <div id='project-list-container' className='flex flex-col gap-4 overflow-hidden'>
       <h2>{HEADING}</h2>
-      <div className='w-full flex flex-col items-stretch justify-between gap-[100px]'>
+      <div
+        id='project-list'
+        className='w-full flex flex-col items-stretch justify-between gap-[100px]'
+      >
         {PROJECTS.map((project) => (
-          <ProjectCard
+          <ProjectListItem
             key={project.id}
             id={project.id}
             name={project.name}

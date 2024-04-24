@@ -27,7 +27,7 @@ const SKILL_ICON_WIDTH = 24;
 const SKILL_ICON_HEIGHT = 24;
 const SKILL_CATEGORIES: SkillCategory[] = [
   {
-    id: 'skill-category-frontend',
+    id: 'sc-frontend',
     name: 'frontend',
     skills: [
       { name: 'HTML5', imageSource: iconHtml5Png },
@@ -40,7 +40,7 @@ const SKILL_CATEGORIES: SkillCategory[] = [
     ]
   },
   {
-    id: 'skill-category-backend',
+    id: 'sc-backend',
     name: 'backend',
     skills: [
       { name: 'Node.js', imageSource: iconNodeJsPng },
@@ -53,7 +53,7 @@ const SKILL_CATEGORIES: SkillCategory[] = [
     ]
   },
   {
-    id: 'skill-category-others',
+    id: 'sc-others',
     name: 'others',
     skills: [
       { name: 'Git', imageSource: iconGitPng },
@@ -78,6 +78,7 @@ interface SkillCategory {
 }
 
 interface SkillCategoryItemProps {
+  id: string;
   name: skillCategory;
   skills: Skill[];
 }
@@ -85,7 +86,7 @@ interface SkillCategoryItemProps {
 const SkillItem = (props: Skill) => {
   const { name, imageSource } = props;
   return (
-    <div className='flex flex-row items-start gap-1 text-[15px]'>
+    <div id={`skill-${name}`} className='flex flex-row items-start gap-1 text-[15px]'>
       <span>{'-'}</span>
       <Image
         src={imageSource}
@@ -100,9 +101,9 @@ const SkillItem = (props: Skill) => {
 };
 
 const SkillCategoryItem = (props: SkillCategoryItemProps) => {
-  const { name, skills } = props;
+  const { id, name, skills } = props;
   return (
-    <div className='w-full px-2 pb-12 flex flex-col ss:w-1/3 ss:pb-6'>
+    <div id={`skill-category-${id}`} className='w-full px-2 pb-12 flex flex-col ss:w-1/3 ss:pb-6'>
       <div className='text-[20px] text-center'>{name}</div>
       <div className='w-full h-[2px] my-1 bg-sunset' />
       <div className='flex flex-row flex-wrap gap-4 ss:flex-col ss:gap-2'>
@@ -119,7 +120,12 @@ export const Skills = () => {
     <CodeSnippet tagName={TAG_NAME}>
       <div className='w-full flex flex-wrap'>
         {SKILL_CATEGORIES.map((category) => (
-          <SkillCategoryItem key={category.id} name={category.name} skills={category.skills} />
+          <SkillCategoryItem
+            key={category.id}
+            id={category.id}
+            name={category.name}
+            skills={category.skills}
+          />
         ))}
       </div>
     </CodeSnippet>
