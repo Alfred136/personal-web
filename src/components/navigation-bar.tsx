@@ -5,17 +5,17 @@ import Link from 'next/link';
 import Image, { type StaticImageData } from 'next/image';
 import { usePathname } from 'next/navigation';
 import { marioIdleGif, marioRunningLeftGif, marioRunningRightGif } from '#/images/mario';
-import { coinSpinningGif } from '#/images/others';
+import { coinSpinningGif } from '#/images/mario';
 
 // global constants
-const CHARACTER_ALT = 'mario';
-const CHARACTER_WIDTH = 24;
-const CHARACTER_HEIGHT = 24;
+const CHARACTER_IMAGE_ALT = 'mario';
+const CHARACTER_IMAGE_WIDTH = 24;
+const CHARACTER_IMAGE_HEIGHT = 24;
 const CHARACTER_ANIMATION_DURATION_MULTIPLIER = 7;
 
-const COIN_ALT = 'gold coin';
-const COIN_WIDTH = 20;
-const COIN_HEIGHT = 20;
+const COIN_IMAGE_ALT = 'gold coin';
+const COIN_IMAGE_WIDTH = 20;
+const COIN_IMAGE_HEIGHT = 20;
 const COIN_ANIMATION_DURATION_MS = 300;
 const COIN_BOUNCE_ANIMATION_DURATION_MS = 300;
 const COIN_BOUNCE_START_POSITION_Y = -50;
@@ -125,9 +125,10 @@ const Character = (props: CharacterProps) => {
     <Image
       ref={characterRef}
       src={CHARACTER_ANIMATION_SOURCE[characterAnimation]}
-      alt={CHARACTER_ALT}
-      width={CHARACTER_WIDTH}
-      height={CHARACTER_HEIGHT}
+      alt={CHARACTER_IMAGE_ALT}
+      width={CHARACTER_IMAGE_WIDTH}
+      height={CHARACTER_IMAGE_HEIGHT}
+      priority={true}
       unoptimized={true}
       className={`absolute left-1 ease-out ${!showCharacter ? 'hidden' : ''}`}
       style={{
@@ -165,9 +166,9 @@ const Coin = (props: CoinProps) => {
   return (
     <Image
       src={coinSpinningGif}
-      alt={COIN_ALT}
-      width={COIN_WIDTH}
-      height={COIN_HEIGHT}
+      alt={COIN_IMAGE_ALT}
+      width={COIN_IMAGE_WIDTH}
+      height={COIN_IMAGE_HEIGHT}
       unoptimized={true}
       className={`ease-out ${activeCoinIndex !== tabIndex ? 'opacity-0' : ''}`}
       style={{
@@ -196,8 +197,8 @@ const TabItem = (props: TabItemProps) => {
       ref={tabsRefs.current[index]}
       key={`tab-${item.id}`}
       href={item.link}
-      className={`relative flex items-center 
-        pt-4 pb-3 pl-2 pr-1 text-[16px] text-morning xs:pr-4 xs:text-[18px]
+      className={`relative flex items-center pt-4 pb-3 pl-2 pr-1 text-[18px] 
+        'text-morning xs:pr-4 xs:text-[20px]
         hover:text-afternoon`}
       onClick={() => handleTabClick(index)}
       onMouseEnter={() => handleMouseEnter(index)}

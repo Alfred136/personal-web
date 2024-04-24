@@ -1,20 +1,21 @@
 'use client';
 
+import '@/app/(routes)/home/styles.css';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/button';
 import { handPng } from '#/images/others';
-import '@/app/(routes)/home/styles.css';
+import { InteractiveLinks } from './interactive-links';
 
 // global constants
 const TYPEWRITER_TYPING_DELAY_MS = 100;
-const TYPEWRITER_TYPING_PAUSE_MS = 500;
+const TYPEWRITER_TYPING_PAUSE_MS = 0;
 
 const HAND_IMAGE_ALT = 'pixel-art hand';
 const HAND_IMAGE_WIDTH = 64;
 const HAND_IMAGE_HEIGHT = 64;
 
-const GREETING_TEXT_1 = 'Hi, my name is ';
+const GREETING_TEXT_1 = 'Hi, I am ';
 const GREETING_TEXT_2 = 'Alfred ';
 
 const RESUME = 'RESUME';
@@ -39,12 +40,10 @@ const AnimatedGreeting = () => {
         setCurrentIndexText1((prev) => prev + 1);
         return;
       }
-      // add a delay then display text 2
       if (currentIndexText2 < GREETING_TEXT_2.length) {
         if (currentIndexText2 === 0) {
           await new Promise((resolve) => setTimeout(resolve, TYPEWRITER_TYPING_PAUSE_MS));
-        }
-        if (currentIndexText2 === GREETING_TEXT_2.length - 1) {
+        } else if (currentIndexText2 === GREETING_TEXT_2.length - 1) {
           setShowCursor(false);
         }
         setDisplayText2((prev) => prev + GREETING_TEXT_2[currentIndexText2]);
@@ -78,33 +77,52 @@ const AnimatedGreeting = () => {
 
 const Introduction = () => {
   return (
-    <h2>
-      <span> I am a passionate Software Engineer with a flair for </span>
-      <span className='highlight highlight-red'>creativity</span>
-      <span> and a deep appreciation for </span>
-      <span className='highlight highlight-yellow'>interactive UI/UX</span>.
-    </h2>
-  );
-};
-
-const ButtonGroup = () => {
-  return (
-    <div className='w-full flex flex-wrap gap-4 justify-center'>
-      <Button title={RESUME} link={RESUME_LINK} />
-      <Button title={CONTACT} link={CONTACT_LINK} target='_self' />
+    // <h2>
+    //   {/* <span> I am a passionate Software Engineer with a flair for </span>
+    //   <span className='highlight highlight-red'>creativity</span>
+    //   <span> and a deep appreciation for </span>
+    //   <span className='highlight highlight-yellow'>interactive UI/UX</span>. */}
+    //   <span className='highlight highlight-red'>Creative</span>
+    //   <span> Software Engineer | </span>
+    //   <span className='highlight highlight-yellow'>Interactive UI/UX</span>
+    //   <span> | Mario lover</span>
+    // </h2>
+    <div className='flex flex-wrap justify-center'>
+      <h2>
+        <span className='highlight highlight-red'>Creative</span>
+        <span> Software Engineer</span>
+      </h2>
+      <h2>&nbsp;|&nbsp;</h2>
+      <h2>
+        <span className='highlight highlight-yellow'>Interactive UI/UX</span>
+      </h2>
+      <h2>&nbsp;|&nbsp;</h2>
+      <h2>
+        <span>Mario lover</span>
+      </h2>
     </div>
   );
 };
 
+// const ButtonGroup = () => {
+//   return (
+//     <div className='w-full flex flex-wrap gap-4 justify-center'>
+//       <Button title={RESUME} link={RESUME_LINK} />
+//       <Button title={CONTACT} link={CONTACT_LINK} target='_self' />
+//     </div>
+//   );
+// };
+
 export const Hero = () => {
   return (
     <div
-      className='absolute top-40 left-[50%] translate-x-[-50%] z-10 
-        max-w-[800px] w-full px-[calc(8px+2vw)] flex flex-col gap-6 items-center text-center'
+      className='absolute top-40 left-[50%] translate-x-[-50%] z-10 max-w-[800px] w-full px-[calc(8px+2vw)] 
+      flex flex-col gap-6 items-center text-center'
     >
       <AnimatedGreeting />
       <Introduction />
-      <ButtonGroup />
+      {/* <ButtonGroup /> */}
+      <InteractiveLinks />
     </div>
   );
 };
