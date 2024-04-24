@@ -197,8 +197,8 @@ const TabItem = (props: TabItemProps) => {
       ref={tabsRefs.current[index]}
       key={`tab-${item.id}`}
       href={item.link}
-      className={`relative flex items-center pt-4 pb-3 pl-2 pr-1 text-[18px] 
-        'text-morning xs:pr-4 xs:text-[20px]
+      className={`relative flex items-center pt-4 pb-3 pl-2 pr-1
+        font-subheading text-[16px] text-morning xs:pr-4 xs:text-[18px]
         hover:text-afternoon`}
       onClick={() => handleTabClick(index)}
       onMouseEnter={() => handleMouseEnter(index)}

@@ -27,7 +27,9 @@ const CodeSnippetCloseTag = (props: TagProps) => {
 const CodeSnippetExpandIcon = (props: CodeSnippetExpandIconProps) => {
   const { showContent } = props;
   return (
-    <h3 className={` text-afternoon duration-300 ${showContent ? 'rotate-[135deg]' : ''}`}>
+    <h3
+      className={`font-heading text-afternoon duration-300 ${showContent ? 'rotate-[135deg]' : ''}`}
+    >
       {'+'}
     </h3>
   );
@@ -48,7 +50,7 @@ export const CodeSnippet = (props: CodeSnippetProps) => {
   return (
     <div className={`relative z-10 max-w-[600px] flex flex-col gap-1 m-auto ${className}`}>
       <div
-        className='w-full flex items-center gap-4 cursor-pointer bg-[#6266ae] hover:bg-night'
+        className='w-full pr-5 flex items-center justify-between gap-4 cursor-pointer bg-[#6266ae] hover:bg-night'
         onClick={() => handleExpandBtnClick()}
       >
         <CodeSnippetOpenTag tagName={tagName} />

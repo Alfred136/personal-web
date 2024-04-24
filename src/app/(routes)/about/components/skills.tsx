@@ -85,7 +85,7 @@ interface SkillCategoryItemProps {
 const SkillItem = (props: Skill) => {
   const { name, imageSource } = props;
   return (
-    <div className='flex flex-row items-start gap-1'>
+    <div className='flex flex-row items-start gap-1 text-[15px]'>
       <span>{'-'}</span>
       <Image
         src={imageSource}
@@ -102,8 +102,8 @@ const SkillItem = (props: Skill) => {
 const SkillCategoryItem = (props: SkillCategoryItemProps) => {
   const { name, skills } = props;
   return (
-    <div className='w-full pb-8 flex flex-col ss:w-1/3'>
-      <div className='text-[20px] text-center uppercase'>{name}</div>
+    <div className='w-full px-2 pb-12 flex flex-col ss:w-1/3 ss:pb-6'>
+      <div className='text-[20px] text-center'>{name}</div>
       <div className='w-full h-[2px] my-1 bg-sunset' />
       <div className='flex flex-row flex-wrap gap-4 ss:flex-col ss:gap-2'>
         {skills.map((skill) => (
@@ -117,7 +117,7 @@ const SkillCategoryItem = (props: SkillCategoryItemProps) => {
 export const Skills = () => {
   return (
     <CodeSnippet tagName={TAG_NAME}>
-      <div className='w-full py-1 px-4 flex flex-wrap bg-night'>
+      <div className='w-full flex flex-wrap'>
         {SKILL_CATEGORIES.map((category) => (
           <SkillCategoryItem key={category.id} name={category.name} skills={category.skills} />
         ))}

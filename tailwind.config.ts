@@ -10,7 +10,8 @@ const config: Config = {
       },
       fontFamily: {
         heading: 'Pixelify Sans, sans-serif',
-        subHeading: 'VT323, sans-serif'
+        subheading: 'VT323, sans-serif',
+        body: 'inconsolata, sans-serif'
       },
       colors: {
         midnight: '#272744',
