@@ -21,7 +21,7 @@ const COIN_BOUNCE_ANIMATION_DURATION_MS = 300;
 const COIN_BOUNCE_START_POSITION_Y = -50;
 const COIN_BOUNCE_END_POSITION_Y = 0;
 
-const SCROLL_Y_THRESHOLD = 90;
+const SCROLL_Y_THRESHOLD = 50;
 const PROGRESS_BAR_SHOW_ANIMATION_DURATION_MS = 300;
 const PROGRESS_BAR_MOVE_ANIMATION_DURATION_MS = 500;
 const ERROR_MESSAGE_TABS_NOT_FOUND = '💣 Error: tabs not found.';
@@ -44,6 +44,7 @@ interface TabItemProps {
   item: TabItem;
   index: number;
   tabsRefs: React.MutableRefObject<Array<React.RefObject<HTMLAnchorElement>>>;
+  isActive: boolean;
   handleTabClick: (index: number) => void;
   handleMouseEnter: (index: number) => void;
   handleMouseLeave: (index: number) => void;
@@ -130,7 +131,7 @@ const Character = (props: CharacterProps) => {
       height={CHARACTER_IMAGE_HEIGHT}
       priority={true}
       unoptimized={true}
-      className={`absolute left-1 mb-[1px] ease-out ${!showCharacter ? 'hidden' : ''}`}
+      className={`absolute left-1 ease-out ${!showCharacter ? 'hidden' : ''}`}
       style={{
         transform: `translateX(${characterPositionX}px)`,
         transitionDuration: `${characterAnimation === CharacterAnimation.Idle ? '0ms' : `${characterAnimationDuration}ms`}`
@@ -190,15 +191,23 @@ const Coin = (props: CoinProps) => {
  * * handleMouseLeave: handle coins and character states and animation effects.
  */
 const TabItem = (props: TabItemProps) => {
-  const { item, index, tabsRefs, handleTabClick, handleMouseEnter, handleMouseLeave, children } =
-    props;
+  const {
+    item,
+    index,
+    tabsRefs,
+    isActive,
+    handleTabClick,
+    handleMouseEnter,
+    handleMouseLeave,
+    children
+  } = props;
   return (
     <Link
       ref={tabsRefs.current[index]}
       key={`tab-${item.id}`}
       href={item.link}
-      className={`relative flex items-center pt-3 pb-2 pl-2 pr-1
-        font-subheading text-[16px] text-morning xs:pr-4 xs:text-[18px]
+      className={`relative flex items-center pt-4 pb-2 pl-2 pr-1
+        font-subheading text-[18px] ${isActive ? 'text-afternoon' : 'text-morning'}  xs:pr-4
         hover:text-afternoon`}
       onClick={() => handleTabClick(index)}
       onMouseEnter={() => handleMouseEnter(index)}
@@ -220,10 +229,10 @@ const ProgressBar = (props: ProgressBarProps) => {
   const { scrollProgress, showProgressBar } = props;
   return (
     <div
-      className={'absolute left-0 bottom-[-1px] bg-evening ease-out'}
+      className={'absolute z-40 left-0 bottom-[-1px] bg-evening ease-out'}
       style={{
         width: `${scrollProgress}%`,
-        height: showProgressBar ? '4px' : '0',
+        height: showProgressBar ? '2px' : '0',
         transitionDuration: `${showProgressBar ? `${PROGRESS_BAR_MOVE_ANIMATION_DURATION_MS}ms` : `${PROGRESS_BAR_SHOW_ANIMATION_DURATION_MS}ms`}`
       }}
     />
@@ -236,8 +245,8 @@ export const NavigationBar = () => {
     Array.from({ length: TABS.length }, () => createRef<HTMLAnchorElement>())
   );
   const characterRef = useRef<HTMLImageElement>(null);
-  const [showProgressBar, setShowProgressBar] = useState(false);
   const [activeTabIndex, setActiveTabIndex] = useState(0);
+  const [showCharacter, setShowCharacter] = useState(false);
   const [characterPositionX, setCharacterPositionX] = useState(0);
   const [characterAnimation, setCharacterAnimation] = useState(CharacterAnimation.Idle);
   const [characterAnimationDuration, setCharacterAnimationDuartion] = useState(0);
@@ -245,7 +254,7 @@ export const NavigationBar = () => {
   const [coinPositionY, setCoinPositionY] = useState(0);
   const [coinAnimationTimeout, setCoinAnimationTimeout] = useState<NodeJS.Timeout | null>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [showCharacter, setShowCharacter] = useState(false);
+  const [showProgressBar, setShowProgressBar] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -356,10 +365,10 @@ export const NavigationBar = () => {
     characterAnimation === CharacterAnimation.RunningRight;
 
   return (
-    <div id='navbar' className={'fixed top-0 z-50 w-full h-[3.125rem]'}>
+    <div id='navbar' className={'fixed top-0 z-50 w-full h-[50px]'}>
       <div
         id='navbar-background'
-        className='absolute left-0 top-0 z-20 w-full h-full bg-midnight opacity-80'
+        className={`absolute left-0 top-0 z-20 w-full h-full bg-midnight ${showProgressBar ? 'opacity-90' : 'opacity-80'}`}
       />
       <div
         id='navbar-content'
@@ -372,6 +381,7 @@ export const NavigationBar = () => {
               item={item}
               index={index}
               tabsRefs={tabsRefs}
+              isActive={activeTabIndex === index && showCharacter}
               handleTabClick={handleTabChange}
               handleMouseEnter={handleMouseEnter}
               handleMouseLeave={handleMouseLeave}

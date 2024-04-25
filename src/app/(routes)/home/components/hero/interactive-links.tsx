@@ -48,7 +48,7 @@ export const InteractiveLinks = () => {
   };
 
   return (
-    <div id='home-hero-interactive-links' className='pt-10 flex flex-col gap-10'>
+    <div id='home-hero-interactive-links' className='pt-10 flex flex-col gap-20'>
       <div className='flex gap-10 md:gap-14'>
         <QuestionBlock
           blockItemName='Github'

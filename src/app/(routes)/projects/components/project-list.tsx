@@ -6,47 +6,50 @@ import { projectFlamingoPng, projectSpli3ePng, projectOldPortfolioPng } from '#/
 const HEADING = 'All Projects';
 const PROJECTS: Project[] = [
   {
-    id: 'project-flamingo',
+    id: 'pj-flamingo',
     name: 'Flamingo - Ecommerce',
-    overview: 'An Ecommerce website with Stripe payment integration.',
-    description:
-      'An Ecommerce store where users can add items to cart and checkout using Stripe payment. This project uses Sanity for backend and react-query for data-fetching. Reponsive UI supporting desktop, tablet and mobile devices.',
+    overview: 'A clothing ecommerce website integrated with Stripe payment',
+    description: `An Ecommerce store utilizing Stripe payment for seamless cart management and checkout. 
+      This project uses Sanity as a headless-cms backend and utilizes Next.js Server-Side Rendering (SSR), 
+      with reponsive UI supporting desktop, tablet and mobile devices.`,
     imageSource: projectFlamingoPng,
     githubURL: 'https://github.com/Alfred136/project-ecommerce-web',
     demoURL: 'https://flamingo-ecommerce.vercel.app/',
-    techStack: ['nextjs', 'sanity', 'tailwindcss', 'stripe']
+    techStack: ['Next.js', 'Sanity', 'Stripe', 'Tailwindcss', 'JavaScript']
   },
   {
-    id: 'project-personal-website',
-    name: 'My Website',
-    overview: 'This site',
-    description:
-      'The site you are visiting now. Featuring a playful and engaging UI with pixel-art styling.',
+    id: 'pj-personal-website',
+    name: 'This Website :)',
+    overview: 'A mario-theme interactive personal website',
+    description: `Welcome to the site you are now exploring, where a pixel-art Mario theme adorns a playful
+      and captivating UI/UX design while maintaining an intuitive and user-friendly experience. 
+      Feel free to get in touch by sending a message through the contact form – I'd love to hear from you!`,
     imageSource: projectSpli3ePng, // TODO: add image
     githubURL: 'https://github.com/Alfred136/personal-website',
     demoURL: '/',
-    techStack: ['nextjs', 'tailwindcss', 'typescript']
+    techStack: ['Next.js', 'Tailwindcss', 'Typescript']
   },
   {
-    id: 'project-old-portfolio',
+    id: 'pj-old-portfolio',
     name: 'Old portfolio site',
-    overview: 'A portfolio website developed with next.js 13.',
-    description: 'A portfolio website developed with next.js 13, featuring a simple and clean UI.',
+    overview: 'A minimalistic portfolio website (old)',
+    description: `A portfolio website developed with Next.js 13, featuring a minimalistic and clean UI, 
+      with reponsive UI supporting desktop, tablet and mobile devices.`,
     imageSource: projectOldPortfolioPng,
     githubURL: 'https://github.com/Alfred136/portfolio-web',
     demoURL: 'https://AlfredTse.vercel.app/',
-    techStack: ['nextjs', 'tailwindcss', 'typescript']
+    techStack: ['Next.js', 'Tailwindcss', 'Typescript']
   },
   {
-    id: 'project-spli3e',
+    id: 'pj-spli3e',
     name: 'Spli3e UI',
-    overview: 'A UI design for a landing page.',
-    description:
-      "A bronchure landing page. The design is referenced from 'Splice Landing Page' on Figma. Reponsive UI supporting desktop, tablet and mobile devices.",
+    overview: 'A website landing page (UI clone)',
+    description: `A responsive bronchure landing page inspired by the 'Splice Landing Page' design on Figma. 
+      This project uses React and Vite.js.`,
     imageSource: projectSpli3ePng,
     githubURL: 'https://github.com/Alfred136/project-spli3e-web',
     demoURL: 'https://spli3e.alfredwebdev.com/',
-    techStack: ['react', 'tailwindcss']
+    techStack: ['React', 'Vite.js', 'Tailwindcss']
   }
 ];
 

@@ -58,7 +58,7 @@ const ProjectImage = (props: ProjectImageProps) => {
       height={PROJECT_IMAGE_HEIGHT}
       priority={true}
       placeholder='blur'
-      className={`w-full object-cover object-left-top ${isDarken ? 'brightness-50' : ''}`}
+      className={`w-full object-cover object-left-top ${isDarken ? 'md:brightness-50' : ''}`}
     />
   );
 };
@@ -67,17 +67,17 @@ const ProjectExpandTab = (props: ProjectExpandTabProps) => {
   const { handleExpandButtonClick } = props;
   return (
     <div
-      className='absolute z-40 right-0 w-[7%] h-full px-2 flex 
-        items-center cursor-pointer shadow-2xl bg-morning hover:bg-slate-300'
+      className='absolute z-40 right-0 w-[7%] h-full flex items-center 
+        cursor-pointer shadow-2xl bg-morning hover:bg-slate-300'
       onClick={() => handleExpandButtonClick()}
     >
       <Image
         src={pointingFingerDownGif}
-        alt='pointing finger down'
-        width={64}
-        height={64}
+        alt='pixel-art pointing finger'
+        width={48}
+        height={48}
         unoptimized={true}
-        className={`rotate-90`}
+        className={`m-auto rotate-90`}
       />
     </div>
   );
@@ -102,8 +102,11 @@ const ProjectDetails = (props: ProjectDetailsProps) => {
         ss:px-8 sm:px-12 md:absolute md:w-4/5 md:px-16 md:py-10 md:border-l-2 md:border-slate-500 md:duration-300
         ${showProjectDetailsOnScreenMd ? 'md:right-[0]' : 'md:right-[calc(-73%+2px)] md:!pl-[10%]'}`}
     >
-      <div id={`project--details-${id}`} className='flex flex-col w-full h-full gap-6  ss:gap-8 '>
-        <h2>{name}</h2>
+      <div
+        id={`project--details-${id}`}
+        className='flex flex-col max-w-[600px] w-full h-full gap-6  ss:gap-8 '
+      >
+        <h2 className='font-body font-bold'>{name}</h2>
         <p>{description}</p>
         <div className='flex flex-wrap gap-1'>
           {techStack.map((tech) => (
@@ -122,7 +125,7 @@ const ProjectDetails = (props: ProjectDetailsProps) => {
 };
 
 export const ProjectListItem = (props: ProjectProps) => {
-  const { id, name, description, imageSource, githubURL, demoURL, techStack } = props;
+  const { id, name, overview, description, imageSource, githubURL, demoURL, techStack } = props;
   const { isScreenSize: isScreenSizeMd } = useIsScreenSize('md');
   const [showProjectDetailsOnScreenMd, setShowProjectDetailsOnScreenMd] = useState(false);
 
@@ -131,29 +134,34 @@ export const ProjectListItem = (props: ProjectProps) => {
   };
 
   return (
-    <div
-      id={`project-item-${id}`}
-      className='relative z-10 w-full h-full flex flex-col gap-2
-      bg-morning overflow-hidden duration-300 
-        hover:scale-[0.98] md:max-h-[400px] md:flex-row'
-    >
-      <ProjectImage src={imageSource} alt={description} isDarken={showProjectDetailsOnScreenMd} />
-      <ProjectDetails
-        id={id}
-        name={name}
-        description={description}
-        githubURL={githubURL}
-        demoURL={demoURL}
-        techStack={techStack}
-        showProjectDetailsOnScreenMd={showProjectDetailsOnScreenMd}
-      />
-
-      {isScreenSizeMd ? (
-        <ProjectExpandTab
-          showProjectDetails={showProjectDetailsOnScreenMd}
-          handleExpandButtonClick={() => handleExpandButtonClick()}
+    <div id={`project-item-${id}`} className='w-full flex flex-col gap-4'>
+      <span id={`project-item-title-${id}`} className='text-afternoon'>
+        {overview}
+      </span>
+      <div
+        id={`project-item-card-${id}`}
+        className='relative z-10 w-full h-full flex flex-col gap-2
+        bg-morning shadow-xl shadow-night overflow-hidden duration-300 
+          hover:scale-[0.99] md:max-h-[400px] md:flex-row'
+      >
+        <ProjectImage src={imageSource} alt={description} isDarken={showProjectDetailsOnScreenMd} />
+        <ProjectDetails
+          id={id}
+          name={name}
+          description={description}
+          githubURL={githubURL}
+          demoURL={demoURL}
+          techStack={techStack}
+          showProjectDetailsOnScreenMd={showProjectDetailsOnScreenMd}
         />
-      ) : null}
+
+        {isScreenSizeMd ? (
+          <ProjectExpandTab
+            showProjectDetails={showProjectDetailsOnScreenMd}
+            handleExpandButtonClick={() => handleExpandButtonClick()}
+          />
+        ) : null}
+      </div>
     </div>
   );
 };

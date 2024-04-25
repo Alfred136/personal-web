@@ -118,7 +118,7 @@ export const QuestionBlock = (props: QuestionBlockProps) => {
 
   return (
     <div
-      className={'relative w-[64px] h-[64px] ss:w-[80px] ss:h-[80px] md:w-[96px] md:h-[96px]'}
+      className={'relative w-[80px] ss:w-[88px] md:w-[96px]'}
       onMouseEnter={() => handleMouseEnter()}
       onMouseLeave={() => handleMouseLeave()}
     >

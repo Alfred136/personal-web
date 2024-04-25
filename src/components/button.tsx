@@ -19,9 +19,10 @@ export const Button = (props: ButtonProps) => {
       className={`relative min-w-full xs:min-w-[100px] ${className ?? ''}`}
     >
       <button
-        className='relative z-30 w-full py-1 bg-sunset font-subheading text-center text-morning
-       hover:bg-evening hover:translate-x-[-2px] hover:translate-y-[2px]
-        xs:px-2 ss:px-4 ss:py-2'
+        className='relative z-30 w-full py-1 bg-sunset 
+          font-subheading text-center text-[16px] text-morning
+        hover:bg-evening hover:translate-x-[-2px] hover:translate-y-[2px]
+          xs:px-2 ss:px-4 ss:py-2'
       >
         {title}
       </button>

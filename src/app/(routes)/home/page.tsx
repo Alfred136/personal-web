@@ -14,7 +14,7 @@ export default function HomePage() {
   }, []);
 
   return (
-    <main className='overflow-hidden'>
+    <main className='p-0 overflow-hidden'>
       <section id='home-hero' className='max-w-none h-screen w-full overflow-hidden'>
         <Hero />
       </section>
