@@ -83,8 +83,11 @@ const PointFormItem = (props: PointFormItemProps) => {
       onMouseLeave={() => handleMouseLeave()}
     >
       <span>{emoji}</span>
-      <span className='text-[15px] ss:text-[16px]'>{statement}</span>
-      <span className='min-w-[33%] w-1/3 ml-auto pr-1 content-center text-[12px] text-afternoon text-right'>
+      <span>{statement}</span>
+      <span
+        className='min-w-[33%] w-1/3 ml-auto pr-1 content-center 
+          text-[12px] text-afternoon text-right ss:w-2/5'
+      >
         {showanswer ? answer : question}
       </span>
     </div>
@@ -94,7 +97,9 @@ const PointFormItem = (props: PointFormItemProps) => {
 export const Introduction = () => {
   return (
     <CodeSnippet tagName='intro'>
-      <div className='w-full pb-6 flex flex-col'>
+      <div className='w-full pb-6 flex flex-col text-[15px] ss:text-[16px]'>
+        <span className='mb-2'>Boring long text ❌ | Short point forms ✅</span>
+
         {INTRODUCTION_POINT_FORMS.map((item) => (
           <PointFormItem
             key={item.id}

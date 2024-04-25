@@ -70,7 +70,7 @@ export const ProjectList = () => {
       <h2>{HEADING}</h2>
       <div
         id='project-list'
-        className='w-full flex flex-col items-stretch justify-between gap-[100px]'
+        className='w-full pb-10 flex flex-col items-stretch justify-between gap-[100px]'
       >
         {PROJECTS.map((project) => (
           <ProjectListItem

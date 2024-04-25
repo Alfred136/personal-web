@@ -104,7 +104,7 @@ const SkillCategoryItem = (props: SkillCategoryItemProps) => {
   const { id, name, skills } = props;
   return (
     <div id={`skill-category-${id}`} className='w-full px-2 pb-12 flex flex-col ss:w-1/3 ss:pb-6'>
-      <div className='text-[20px] text-center'>{name}</div>
+      <div className='text-xl text-center font-bold'>{name}</div>
       <div className='w-full h-[2px] my-1 bg-sunset' />
       <div className='flex flex-row flex-wrap gap-4 ss:flex-col ss:gap-2'>
         {skills.map((skill) => (
