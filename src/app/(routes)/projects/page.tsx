@@ -1,4 +1,4 @@
-import { ProjectList } from './components/project-list';
+import { ProjectList } from './components';
 import { BackgroundImage } from '@/components/background-image';
 
 export default function ProjectsPage() {

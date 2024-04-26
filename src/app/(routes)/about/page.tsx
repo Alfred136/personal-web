@@ -1,6 +1,4 @@
-import { Introduction } from './components/introduction';
-import { Story } from './components/story';
-import { Skills } from './components/skills';
+import { Introduction, Story, Skills } from './components';
 import { BackgroundImage } from '@/components/background-image';
 
 export default function AboutPage() {
