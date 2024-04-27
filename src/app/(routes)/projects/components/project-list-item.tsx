@@ -142,7 +142,7 @@ export const ProjectListItem = (props: ProjectProps) => {
         id={`project-item-card-${id}`}
         className='relative z-10 w-full h-full flex flex-col gap-2
         bg-morning shadow-xl shadow-night overflow-hidden duration-300 
-          hover:scale-[0.99] md:max-h-[400px] md:flex-row'
+          md:max-h-[400px] md:flex-row'
       >
         <ProjectImage src={imageSource} alt={description} isDarken={showProjectDetailsOnScreenMd} />
         <ProjectDetails

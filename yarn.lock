@@ -347,6 +347,11 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.57.0.tgz#a5417ae8427873f1dd08b70b3574b453e67b5f7f"
   integrity sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==
 
+"@hookform/resolvers@^3.3.4":
+  version "3.3.4"
+  resolved "https://registry.yarnpkg.com/@hookform/resolvers/-/resolvers-3.3.4.tgz#de9b668c2835eb06892290192de6e2a5c906229b"
+  integrity sha512-o5cgpGOuJYrd+iMKvkttOclgwRW86EsWJZZRC23prf0uU2i48Htq4PuT73AVb9ionFyZrwYEITuOFGF+BydEtQ==
+
 "@humanwhocodes/config-array@^0.11.14":
   version "0.11.14"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.11.14.tgz#d78e481a039f7566ecc9660b4ea7fe6b1fec442b"
@@ -803,6 +808,13 @@
   dependencies:
     undici-types "~5.26.4"
 
+"@types/nodemailer@^6.4.14":
+  version "6.4.14"
+  resolved "https://registry.yarnpkg.com/@types/nodemailer/-/nodemailer-6.4.14.tgz#5c81a5e856db7f8ede80013e6dbad7c5fb2283e2"
+  integrity sha512-fUWthHO9k9DSdPCSPRqcu6TWhYyxTBg382vlNIttSe9M7XfsT06y0f24KHXtbnijPGGRIcVvdKHTNikOI6qiHA==
+  dependencies:
+    "@types/node" "*"
+
 "@types/prop-types@*":
   version "15.7.12"
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.12.tgz#12bb1e2be27293c1406acb6af1c3f3a1481d98c6"
@@ -812,13 +824,6 @@
   version "18.2.24"
   resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-18.2.24.tgz#8dda8f449ae436a7a6e91efed8035d4ab03ff759"
   integrity sha512-cN6upcKd8zkGy4HU9F1+/s98Hrp6D4MOcippK4PoE8OZRngohHZpbJn1GsaDLz87MqvHNoT13nHvNqM9ocRHZg==
-  dependencies:
-    "@types/react" "*"
-
-"@types/react-scroll@^1.8.10":
-  version "1.8.10"
-  resolved "https://registry.yarnpkg.com/@types/react-scroll/-/react-scroll-1.8.10.tgz#585a5c4bd0654434f3e55a08e94ed2e048bae7c7"
-  integrity sha512-RD4Z7grbdNGOKwKnUBKar6zNxqaW3n8m9QSrfvljW+gmkj1GArb8AFBomVr6xMOgHPD3v1uV3BrIf01py57daQ==
   dependencies:
     "@types/react" "*"
 
@@ -3142,11 +3147,6 @@ lodash.merge@^4.6.2:
   resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
   integrity sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==
 
-lodash.throttle@^4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/lodash.throttle/-/lodash.throttle-4.1.1.tgz#c23e91b710242ac70c37f1e1cda9274cc39bf2f4"
-  integrity sha512-wIkUCfVKpVsWo3JSZlc+8MB5it+2AN5W8J7YVMST30UrvcQNZ1Okbj+rbVniijTWE6FGYy4XJq/rHkas8qJMLQ==
-
 loose-envify@^1.1.0, loose-envify@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/loose-envify/-/loose-envify-1.4.0.tgz#71ee51fa7be4caec1a63839f7e682d8132d30caf"
@@ -3302,6 +3302,11 @@ node-releases@^2.0.14:
   version "2.0.14"
   resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-2.0.14.tgz#2ffb053bceb8b2be8495ece1ab6ce600c4461b0b"
   integrity sha512-y10wOWt8yZpqXmOgRo77WaHEmhYQYGNA6y421PKsKYWEK8aW+cqAphborZDhqfyKrbZEN92CN1X2KbafY2s7Yw==
+
+nodemailer@^6.9.13:
+  version "6.9.13"
+  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-6.9.13.tgz#5b292bf1e92645f4852ca872c56a6ba6c4a3d3d6"
+  integrity sha512-7o38Yogx6krdoBf3jCAqnIN4oSQFx+fMa0I7dK1D+me9kBxx12D+/33wSb+fhOCtIxvYJ+4x4IMEhmhCKfAiOA==
 
 normalize-path@^3.0.0, normalize-path@~3.0.0:
   version "3.0.0"
@@ -3626,7 +3631,7 @@ prompts@^2.0.1:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@^15.7.2, prop-types@^15.8.1:
+prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -3672,14 +3677,6 @@ react-is@^18.0.0:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.2.0.tgz#199431eeaaa2e09f86427efbb4f1473edb47609b"
   integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
-
-react-scroll@^1.9.0:
-  version "1.9.0"
-  resolved "https://registry.yarnpkg.com/react-scroll/-/react-scroll-1.9.0.tgz#2984006e184afd0e4018f837d127edf5fa8f152c"
-  integrity sha512-mamNcaX9Ng+JeSbBu97nWwRhYvL2oba+xR2GxvyXsbDeGP+gkYIKZ+aDMMj/n20TbV9SCWm/H7nyuNTSiXA6yA==
-  dependencies:
-    lodash.throttle "^4.1.1"
-    prop-types "^15.7.2"
 
 react@^18:
   version "18.2.0"
@@ -4469,7 +4466,7 @@ yocto-queue@^0.1.0:
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
 
-zod@^3.22.4:
-  version "3.22.4"
-  resolved "https://registry.yarnpkg.com/zod/-/zod-3.22.4.tgz#f31c3a9386f61b1f228af56faa9255e845cf3fff"
-  integrity sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==
+zod@^3.23.4:
+  version "3.23.4"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-3.23.4.tgz#c63805b2f39e10d4ab3d55eb3c8cdb472c79dfb1"
+  integrity sha512-/AtWOKbBgjzEYYQRNfoGKHObgfAZag6qUJX1VbHo2PRBgS+wfWagEY2mizjfyAPcGesrJOcx/wcl0L9WnVrHFw==
