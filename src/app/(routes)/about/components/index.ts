@@ -1,5 +1,5 @@
-import { Introduction } from './introduction';
-import { Story } from './story';
+import { Intro } from './intro';
 import { Skills } from './skills';
+import { Story } from './story';
 
-export { Introduction, Story, Skills };
+export { Intro, Skills, Story };

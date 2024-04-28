@@ -3,7 +3,7 @@
 import { Hero } from './components';
 import { useEffect } from 'react';
 
-export default function HomePage() {
+const HomePage = () => {
   useEffect(() => {
     const key = 'isWebsiteFirstLoad';
     const isFirstPageLoadInStorage = localStorage.getItem(key);
@@ -11,7 +11,7 @@ export default function HomePage() {
     if (!isFirstPageLoadInStorage) {
       localStorage.setItem(key, 'false');
     }
-  }, []);
+  }, []); //todo: refactor into a hook
 
   return (
     <main className='p-0 overflow-hidden'>
@@ -20,4 +20,6 @@ export default function HomePage() {
       </section>
     </main>
   );
-}
+};
+
+export default HomePage;

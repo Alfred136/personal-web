@@ -1,14 +1,16 @@
-import { ContactForm } from './components';
-import { BackgroundImage } from '@/components/background-image';
+import { Form } from './components/form';
+import { Background } from '@/components';
 
-export default function ContactPage() {
+const ContactPage = () => {
   return (
     <main>
       <section id='contact-form'>
-        <ContactForm />
+        <Form />
       </section>
 
-      <BackgroundImage />
+      <Background />
     </main>
   );
-}
+};
+
+export default ContactPage;

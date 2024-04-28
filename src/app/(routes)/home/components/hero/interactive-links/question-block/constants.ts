@@ -1,0 +1,41 @@
+import { StaticImageData } from 'next/image';
+import { ImageHeight, ImageWidth } from '@/shared/types';
+import { coinSpinningGif, questionBlockGif, questionBlockPng } from '#/images/mario';
+
+// image
+const COIN_IMAGE_SRC: StaticImageData = coinSpinningGif;
+const COIN_IMAGE_ALT: string = 'gold coin';
+const COIN_IMAGE_WIDTH: ImageWidth = 64;
+const COIN_IMAGE_HEIGHT: ImageHeight = 64;
+
+const QUESTION_BLOCK_IMAGE_SRC_GIF: StaticImageData = questionBlockGif;
+const QUESTION_BLOCK_IMAGE_SRC_PNG: StaticImageData = questionBlockPng;
+const QUESTION_BLOCK_IMAGE_ALT: string = 'pixel-art question block';
+const QUESTION_BLOCK_IMAGE_WIDTH: ImageWidth = 128;
+const QUESTION_BLOCK_IMAGE_HEIGHT: ImageHeight = 128;
+
+// animation
+const QUESTION_BLOCK_DROP_START_POSITION_Y: number = 600;
+const QUESTION_BLOCK_DROP_END_POSITION_Y: number = 0;
+const QUESTION_BLOCK_DROP_ANIMATION_DURATION_MS: number = 1000;
+const QUESTION_BLOCK_BOUNCE_START_POSITION_Y: number = -10;
+const QUESTION_BLOCK_BOUNCE_END_POSITION_Y: number = 0;
+const QUESTION_BLOCK_BOUNCE_ANIMATION_DURATION_MS: number = 100;
+
+export {
+  COIN_IMAGE_SRC,
+  COIN_IMAGE_ALT,
+  COIN_IMAGE_WIDTH,
+  COIN_IMAGE_HEIGHT,
+  QUESTION_BLOCK_IMAGE_SRC_GIF,
+  QUESTION_BLOCK_IMAGE_SRC_PNG,
+  QUESTION_BLOCK_IMAGE_ALT,
+  QUESTION_BLOCK_IMAGE_WIDTH,
+  QUESTION_BLOCK_IMAGE_HEIGHT,
+  QUESTION_BLOCK_DROP_START_POSITION_Y,
+  QUESTION_BLOCK_DROP_END_POSITION_Y,
+  QUESTION_BLOCK_DROP_ANIMATION_DURATION_MS,
+  QUESTION_BLOCK_BOUNCE_START_POSITION_Y,
+  QUESTION_BLOCK_BOUNCE_END_POSITION_Y,
+  QUESTION_BLOCK_BOUNCE_ANIMATION_DURATION_MS
+};

@@ -1,11 +1,11 @@
-import { Introduction, Story, Skills } from './components';
-import { BackgroundImage } from '@/components/background-image';
+import { Intro, Story, Skills } from './components';
+import { Background } from '@/components';
 
-export default function AboutPage() {
+const AboutPage = () => {
   return (
     <main>
-      <section id='about-overview'>
-        <Introduction />
+      <section id='about-intro'>
+        <Intro />
       </section>
 
       <section id='about-skills'>
@@ -16,7 +16,9 @@ export default function AboutPage() {
         <Story />
       </section>
 
-      <BackgroundImage />
+      <Background />
     </main>
   );
-}
+};
+
+export default AboutPage;

@@ -1,14 +1,16 @@
 import { ProjectList } from './components';
-import { BackgroundImage } from '@/components/background-image';
+import { Background } from '@/components';
 
-export default function ProjectsPage() {
+const ProjectsPage = () => {
   return (
     <main>
-      <section id='projects-project-list'>
+      <section id='projects-list'>
         <ProjectList />
       </section>
 
-      <BackgroundImage />
+      <Background />
     </main>
   );
-}
+};
+
+export default ProjectsPage;
