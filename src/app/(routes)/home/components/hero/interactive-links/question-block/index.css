@@ -1,0 +1,35 @@
+.question-block-bounce {
+  animation-name: question-block-bounce-animation;
+  animation-duration: 200ms;
+}
+
+@keyframes question-block-bounce-animation {
+ 50% { transform: translateY(-10px) }
+100% { transform: translateY(0) }
+}
+
+.question-block-spawn {
+  animation-name: question-block-spawn-animation;
+  animation-timing-function: ease-out;
+}
+
+@keyframes question-block-spawn-animation {
+  0% { transform: scale(0) }
+  50% { transform: scale(0) }
+  90% { transform: scale(1.2) }
+ 100% { transform: scale(1) }
+}
+
+.question-block-drop {
+  animation-name: question-block-drop-and-bounce-animation;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes question-block-drop-and-bounce-animation {
+  0% { transform: translateY(-1000px) rotate(0deg) }
+  10% { transform: translateY(-600px) rotate(0deg) }
+  25% { transform: translateY(0) rotate(30deg) }
+  40% { transform: translateY(-20px) rotate(-20deg) }
+  50% { transform: translateY(0) rotate(0deg) }
+  100% { transform: translateY(0) rotate(0deg) }
+}

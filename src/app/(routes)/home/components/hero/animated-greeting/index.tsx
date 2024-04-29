@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import * as Constants from './constants';
-import '@/app/(routes)/home/styles.css';
+import './index.css';
 
 const AnimatedGreeting = () => {
   const [displayText1, setDisplayText1] = useState('');

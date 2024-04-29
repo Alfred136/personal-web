@@ -6,9 +6,18 @@ interface QuestionBlockProps {
   blockItemName: string;
   blockItemLink: string;
   showBlockItem: boolean;
-  dropAnimationDelay: number;
+  dropAnimationDuration: number;
   handleBlockClick: () => void;
   setDialogueText: (text: string) => void;
 }
 
+enum QuestionBlockAnimation {
+  Idle,
+  Drop,
+  Bounce,
+  Spin
+}
+
 export type { QuestionBlockProps };
+
+export { QuestionBlockAnimation };

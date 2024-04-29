@@ -1,17 +1,17 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import * as Constants from './constants';
-import type { QuestionBlockProps } from './types';
+import { type QuestionBlockProps, QuestionBlockAnimation } from './types';
+import './index.css';
 
 /**
  * A clickable, animated link (questipon block)
  *
  * @component
  * @behaviours
- * * websiteFirstLoad: shows one-time drop animation.
  * * onMouseVisit: shows spinning animation and dialogue text.
  * * onMouseLeave: cancel spinning animation and dialogue text.
  * * onClick: shows bounce animation, coin bounce animation, and reveals block item (social link).
@@ -23,72 +23,39 @@ const QuestionBlock = (props: QuestionBlockProps) => {
     blockItemName,
     blockItemLink,
     showBlockItem,
-    dropAnimationDelay,
+    dropAnimationDuration,
     handleBlockClick,
     setDialogueText
   } = props;
+  const [blockAnimation, setBlockAnimation] = useState(QuestionBlockAnimation.Drop);
 
-  const [showCoin, setShowCoin] = useState(false);
-  const [showBlock, setShowBlock] = useState(false);
-  const [showDropAnimation, setShowDropAnimation] = useState(false); // one-time animation on first page load
-  const [showSpinningAnimation, setShowSpinningAnimation] = useState(false);
-  const [blockAnimationDuration, setBlockAnimationDuration] = useState(100);
-  const [blockPositionY, setBlockPositionY] = useState(0);
+  const isBlockAnimationIdle = () => blockAnimation === QuestionBlockAnimation.Idle;
+  const isBlockAnimationDrop = () => blockAnimation === QuestionBlockAnimation.Drop;
+  const isBlockAnimationSpin = () => blockAnimation === QuestionBlockAnimation.Spin;
+  const isBlockAnimationBounce = () => blockAnimation === QuestionBlockAnimation.Bounce;
 
   const handleMouseEnter = () => {
-    setShowSpinningAnimation(true);
+    if (!isBlockAnimationIdle()) return;
+    setBlockAnimation(QuestionBlockAnimation.Spin);
     setDialogueText(showBlockItem ? `Check out my ${blockItemName}!` : 'Click me!');
   };
 
   const handleMouseLeave = () => {
-    setShowSpinningAnimation(false);
+    if (isBlockAnimationIdle() || isBlockAnimationBounce()) return;
+    setBlockAnimation(QuestionBlockAnimation.Idle);
     setDialogueText('');
   };
 
   const handleClick = () => {
-    if (showBlockItem) return;
-    setShowCoin(true);
-    setBlockPositionY(Constants.QUESTION_BLOCK_BOUNCE_START_POSITION_Y);
+    if (showBlockItem || isBlockAnimationDrop() || isBlockAnimationBounce()) return;
+    setBlockAnimation(QuestionBlockAnimation.Bounce);
     setDialogueText(`${blockItemName}!`);
     handleBlockClick();
   };
 
-  const handleBlockTransitionEnd = () => {
-    setBlockPositionY(Constants.QUESTION_BLOCK_BOUNCE_END_POSITION_Y);
-    // reset animation duration after one-time drop animation is complete.
-    if (
-      !showDropAnimation &&
-      blockAnimationDuration !== Constants.QUESTION_BLOCK_BOUNCE_ANIMATION_DURATION_MS
-    ) {
-      setBlockAnimationDuration(Constants.QUESTION_BLOCK_BOUNCE_ANIMATION_DURATION_MS);
-    }
+  const handleBlockAnimationEnd = () => {
+    setBlockAnimation(QuestionBlockAnimation.Idle);
   };
-
-  const handleCoinTransitionEnd = () => {
-    setShowCoin(false);
-  };
-
-  // if website is loaded for the first time, change the initial position and animation settings of the blocks.
-  useEffect(() => {
-    if (!localStorage.getItem('isWebsiteFirstLoad')) {
-      setBlockAnimationDuration(0);
-      setBlockPositionY(Constants.QUESTION_BLOCK_DROP_START_POSITION_Y);
-      setShowDropAnimation(true);
-    } else {
-      setShowBlock(true);
-    }
-  }, []);
-
-  // called after 1st useEffect, wait for delay then start the one-time drop animation.
-  useEffect(() => {
-    if (showDropAnimation) {
-      setTimeout(() => {
-        setBlockAnimationDuration(Constants.QUESTION_BLOCK_DROP_ANIMATION_DURATION_MS);
-        setBlockPositionY(Constants.QUESTION_BLOCK_DROP_END_POSITION_Y);
-        setShowDropAnimation(false);
-      }, dropAnimationDelay);
-    }
-  }, [showDropAnimation, dropAnimationDelay]);
 
   return (
     <div
@@ -100,7 +67,7 @@ const QuestionBlock = (props: QuestionBlockProps) => {
         src={
           showBlockItem
             ? blockItemImage
-            : showSpinningAnimation
+            : isBlockAnimationSpin()
               ? Constants.QUESTION_BLOCK_IMAGE_SRC_GIF
               : Constants.QUESTION_BLOCK_IMAGE_SRC_PNG
         }
@@ -109,13 +76,13 @@ const QuestionBlock = (props: QuestionBlockProps) => {
         height={Constants.QUESTION_BLOCK_IMAGE_HEIGHT}
         priority={true}
         unoptimized={true}
-        className={`relative z-10 w-auto h-auto cursor-pointer ease-in-out ${showBlock ? 'opacity-100' : 'opacity-0'}`}
+        className={`relative z-10 w-auto h-auto cursor-pointer ease-in-out 
+          ${Constants.QUESTION_BLOCK_ANIMATION_CLASSNAME[blockAnimation]}`}
         style={{
-          transform: `translateY(${blockPositionY}px)`,
-          transitionDuration: `${blockAnimationDuration}ms`
+          animationDuration: `${isBlockAnimationDrop() ? dropAnimationDuration : 200}ms`
         }}
         onClick={handleClick}
-        onTransitionEnd={handleBlockTransitionEnd}
+        onAnimationEnd={handleBlockAnimationEnd}
       />
 
       <Image
@@ -124,9 +91,9 @@ const QuestionBlock = (props: QuestionBlockProps) => {
         width={Constants.COIN_IMAGE_WIDTH}
         height={Constants.COIN_IMAGE_HEIGHT}
         unoptimized={true}
-        className={`absolute z-0 top-0 left-[50%] translate-x-[-50%] w-[48px] h-[48px] ss:w-[56px] ss:h-[56px] md:w-[64px] md:h-[64px] 
-          duration-200 ease-out ${showCoin ? 'translate-y-[-200%]' : 'opacity-0 '}`}
-        onTransitionEnd={handleCoinTransitionEnd}
+        className={`absolute z-0 top-0 left-[50%] translate-x-[-50%] w-[48px] h-[48px] 
+          ss:w-[56px] ss:h-[56px] md:w-[64px] md:h-[64px] duration-200 ease-out
+          ${isBlockAnimationBounce() ? 'translate-y-[-200%]' : 'opacity-0 '}`}
       />
 
       {showBlockItem ? (

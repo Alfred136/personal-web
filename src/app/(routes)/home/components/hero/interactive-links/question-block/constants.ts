@@ -1,5 +1,6 @@
 import { StaticImageData } from 'next/image';
 import { ImageHeight, ImageWidth } from '@/shared/types';
+import { QuestionBlockAnimation } from './types';
 import { coinSpinningGif, questionBlockGif, questionBlockPng } from '#/images/mario';
 
 // image
@@ -15,12 +16,12 @@ const QUESTION_BLOCK_IMAGE_WIDTH: ImageWidth = 128;
 const QUESTION_BLOCK_IMAGE_HEIGHT: ImageHeight = 128;
 
 // animation
-const QUESTION_BLOCK_DROP_START_POSITION_Y: number = 600;
-const QUESTION_BLOCK_DROP_END_POSITION_Y: number = 0;
-const QUESTION_BLOCK_DROP_ANIMATION_DURATION_MS: number = 1000;
-const QUESTION_BLOCK_BOUNCE_START_POSITION_Y: number = -10;
-const QUESTION_BLOCK_BOUNCE_END_POSITION_Y: number = 0;
-const QUESTION_BLOCK_BOUNCE_ANIMATION_DURATION_MS: number = 100;
+const QUESTION_BLOCK_ANIMATION_CLASSNAME: Record<QuestionBlockAnimation, string> = {
+  [QuestionBlockAnimation.Idle]: '',
+  [QuestionBlockAnimation.Drop]: 'question-block-drop',
+  [QuestionBlockAnimation.Bounce]: 'question-block-bounce',
+  [QuestionBlockAnimation.Spin]: ''
+};
 
 export {
   COIN_IMAGE_SRC,
@@ -32,10 +33,5 @@ export {
   QUESTION_BLOCK_IMAGE_ALT,
   QUESTION_BLOCK_IMAGE_WIDTH,
   QUESTION_BLOCK_IMAGE_HEIGHT,
-  QUESTION_BLOCK_DROP_START_POSITION_Y,
-  QUESTION_BLOCK_DROP_END_POSITION_Y,
-  QUESTION_BLOCK_DROP_ANIMATION_DURATION_MS,
-  QUESTION_BLOCK_BOUNCE_START_POSITION_Y,
-  QUESTION_BLOCK_BOUNCE_END_POSITION_Y,
-  QUESTION_BLOCK_BOUNCE_ANIMATION_DURATION_MS
+  QUESTION_BLOCK_ANIMATION_CLASSNAME
 };

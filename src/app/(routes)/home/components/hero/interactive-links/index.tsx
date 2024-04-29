@@ -45,7 +45,7 @@ const InteractiveLinks = () => {
           blockItemImage={Constants.GITHUB_IMAGE_SRC}
           blockItemAlt={Constants.GITHUB_IMAGE_ALT}
           showBlockItem={showBlock1Item}
-          dropAnimationDelay={Constants.BLOCK_1_DROP_ANIMATION_DELAY_MS}
+          dropAnimationDuration={Constants.BLOCK_1_DROP_ANIMATION_DURATION_MS}
           handleBlockClick={handleBlock1Click}
           setDialogueText={setDialogueText}
         />
@@ -55,7 +55,7 @@ const InteractiveLinks = () => {
           blockItemImage={Constants.RESUME_IMAGE_SRC}
           blockItemAlt={Constants.RESUME_IMAGE_ALT}
           showBlockItem={showBlock2Item}
-          dropAnimationDelay={Constants.BLOCK_2_DROP_ANIMATION_DELAY_MS}
+          dropAnimationDuration={Constants.BLOCK_2_DROP_ANIMATION_DURATION_MS}
           handleBlockClick={handleBlock2Click}
           setDialogueText={setDialogueText}
         />
@@ -65,7 +65,7 @@ const InteractiveLinks = () => {
           blockItemImage={Constants.LINKEDIN_IMAGE_SRC}
           blockItemAlt={Constants.LINKEDIN_IMAGE_ALT}
           showBlockItem={showBlock3Item}
-          dropAnimationDelay={Constants.BLOCK_3_DROP_ANIMATION_DELAY_MS}
+          dropAnimationDuration={Constants.BLOCK_3_DROP_ANIMATION_DURATION_MS}
           handleBlockClick={handleBlock3Click}
           setDialogueText={setDialogueText}
         />
