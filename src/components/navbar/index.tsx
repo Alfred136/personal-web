@@ -1,199 +1,64 @@
 'use client';
 
 import React, { useState, useEffect, useRef, createRef } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import * as Constants from './constant';
-import {
-  CharacterAnimation,
-  type NavTabProps,
-  type CoinProps,
-  type CharacterProps,
-  type ProgressBarProps
-} from './types';
+import * as Constants from './constants';
+import { MarioAnimation } from './types';
+import { useScrollProgress } from './hooks';
+import { ProgressBar } from './progress-bar';
+import { Mario } from './mario';
+import { Coin } from './coin';
+import { Tab } from './tab';
 
 /**
- * An animated character (mario)
+ * An animated nabvar
  *
- * @component
+ * @components
+ * * Tabs - (4)
+ * * Mario - (1)
+ * * Coins - (1 per Tab)
+ * * Progress bar - (1)
+ * ----------------------------------------
  * @behaviours
- * * onTabHover: shows running animation.
+ * * onTabMouseEnter
+ *   - (Mario) - shows running animation.
+ *   - (Coin) - appears and stays on the tab. (only one coin can be active at a time).
+ * * onTabMouseLeave
+ *   - (Mario) - shows idle animation.
  * * onTabClick: runs to the target tab.
- */
-const Character = (props: CharacterProps) => {
-  const {
-    showCharacter,
-    characterRef,
-    characterAnimation,
-    characterAnimationDuration,
-    characterPositionX,
-    handleCharacterTransitionEnd
-  } = props;
-  return (
-    <Image
-      ref={characterRef}
-      src={Constants.CHARACTER_ANIMATION_SOURCE[characterAnimation]}
-      alt={Constants.CHARACTER_IMAGE_ALT}
-      width={Constants.CHARACTER_IMAGE_WIDTH}
-      height={Constants.CHARACTER_IMAGE_HEIGHT}
-      priority={true}
-      unoptimized={true}
-      className={`absolute left-1 ease-out ${!showCharacter ? 'hidden' : ''}`}
-      style={{
-        transform: `translateX(${characterPositionX}px)`,
-        transitionDuration: `${characterAnimation === CharacterAnimation.Idle ? '0ms' : `${characterAnimationDuration}ms`}`
-      }}
-      onTransitionEnd={() => handleCharacterTransitionEnd()}
-    />
-  );
-};
-
-/**
- * An animated tool (gold coin)
+ *   - (Mario) - runs to the target tab.
+ *   - (Mario) - when Mario arrives, shows idle animation.
+ *   - (Coin) - when Mario arrives, bounces and dispears.
  *
- * @component
- * @behaviours
- * * onTabVisit: appears and stays on the tab. (only one coin can be active at a time)
- * * onTabClick: when the character arrives the target tab, it bounces and dispears.
  */
-const Coin = (props: CoinProps) => {
-  const {
-    activeCoinIndex,
-    activeTabIndex,
-    tabIndex,
-    coinPositionY,
-    characterAnimation,
-    handleCoinTransitionEnd
-  } = props;
-
-  const isCharacterStoppedOnCoin = () =>
-    activeCoinIndex === activeTabIndex &&
-    activeCoinIndex === tabIndex &&
-    characterAnimation === CharacterAnimation.Idle;
-
-  return (
-    <Image
-      src={Constants.COIN_IMAGE_SRC}
-      alt={Constants.COIN_IMAGE_ALT}
-      width={Constants.COIN_IMAGE_WIDTH}
-      height={Constants.COIN_IMAGE_HEIGHT}
-      unoptimized={true}
-      className={`ease-out ${activeCoinIndex !== tabIndex ? 'opacity-0' : ''}`}
-      style={{
-        transform: `${isCharacterStoppedOnCoin() ? `translateY(${coinPositionY}px)` : 'none'}`,
-        transitionDuration: `${isCharacterStoppedOnCoin() ? `${Constants.COIN_BOUNCE_ANIMATION_DURATION_MS}ms` : `${Constants.COIN_ANIMATION_DURATION_MS}ms`}`
-      }}
-      onTransitionEnd={handleCoinTransitionEnd}
-    />
-  );
-};
-
-/**
- * A tab item in the navbar
- *
- * @component
- * @features
- * * handleTabClick: handle pages navigation and character moving logics.
- * * handleMouseEnter: handle coins and character states and animation effects.
- * * handleMouseLeave: handle coins and character states and animation effects.
- */
-const Tab = (props: NavTabProps) => {
-  const {
-    tab,
-    index,
-    tabsRefs,
-    isActive,
-    handleTabClick,
-    handleMouseEnter,
-    handleMouseLeave,
-    children
-  } = props;
-  return (
-    <Link
-      ref={tabsRefs.current[index]}
-      href={tab.link}
-      className={`relative flex items-center pt-4 pb-2 pl-2 pr-1
-        font-subheading text-[18px] ${isActive ? 'text-afternoon' : 'text-morning'} 
-        xs:pr-4 hover:text-afternoon`}
-      onClick={() => handleTabClick(index)}
-      onMouseEnter={() => handleMouseEnter(index)}
-      onMouseLeave={() => handleMouseLeave(index)}
-    >
-      {children}
-      {tab.label}
-    </Link>
-  );
-};
-
-/**
- * A progress bar in the bottom of the NavBar
- *
- * @component
- * visible after some scrolling
- */
-const ProgressBar = (props: ProgressBarProps) => {
-  const { scrollProgress, showProgressBar } = props;
-  return (
-    <div
-      className={'absolute z-40 left-0 bottom-[-1px] bg-evening ease-out'}
-      style={{
-        width: `${scrollProgress}%`,
-        height: showProgressBar ? '2px' : '0',
-        transitionDuration: `${showProgressBar ? `${Constants.PROGRESS_BAR_MOVE_ANIMATION_DURATION_MS}ms` : `${Constants.PROGRESS_BAR_SHOW_ANIMATION_DURATION_MS}ms`}`
-      }}
-    />
-  );
-};
-
 const NavBar = () => {
   const pathName = usePathname();
   const tabsRefs = useRef(
     Array.from({ length: Constants.TABS.length }, () => createRef<HTMLAnchorElement>())
   );
-  const characterRef = useRef<HTMLImageElement>(null);
+  const marioRef = useRef<HTMLImageElement>(null);
+  const [showMario, setShowMario] = useState(false);
   const [activeTabIndex, setActiveTabIndex] = useState(0);
-  const [showCharacter, setShowCharacter] = useState(false);
-  const [characterPositionX, setCharacterPositionX] = useState(0);
-  const [characterAnimation, setCharacterAnimation] = useState(CharacterAnimation.Idle);
-  const [characterAnimationDuration, setCharacterAnimationDuartion] = useState(0);
   const [activeCoinIndex, setActiveCoinIndex] = useState(-1);
+  const [marioPositionX, setMarioPositionX] = useState(0);
+  const [marioAnimation, setMarioAnimation] = useState(MarioAnimation.Idle);
+  const [marioAnimationDuration, setMarioAnimationDuartion] = useState(0);
   const [coinPositionY, setCoinPositionY] = useState(0);
-  const [coinAnimationTimeout, setCoinAnimationTimeout] = useState<NodeJS.Timeout | null>(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const [showProgressBar, setShowProgressBar] = useState(false);
+  const { scrollProgress, showProgressBar } = useScrollProgress(false);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const documentHeight = document.documentElement.scrollHeight;
-      const scrollableDistance = documentHeight - windowHeight;
-      const currentScrollPercentage = (scrollY / scrollableDistance) * 100;
-      setScrollProgress(currentScrollPercentage);
-      setShowProgressBar(window.scrollY >= Constants.SCROLL_Y_THRESHOLD);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
-  // when url changes, update active tab, character position and coin appearance
+  // when url changes, update active tab, mario position and coin appearance
   useEffect(() => {
     const tabIndex = Constants.TABS.findIndex((tab) => tab.link === pathName);
     if (tabIndex === -1) {
       return;
     }
-    // handle cases of url changes with browser, update active tab and character position while hidding character animation
-    if (activeTabIndex === 0 && !showCharacter) {
+    // when url changes via browser, update active tab and mario position while hiding mario animation
+    if (activeTabIndex === 0 && !showMario) {
       handleTabChange(tabIndex, false);
-      setShowCharacter(true);
+      setShowMario(true);
       return;
     }
-    setShowCharacter(true);
+    setShowMario(true);
     setActiveCoinIndex(tabIndex);
     handleTabChange(tabIndex);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -210,70 +75,69 @@ const NavBar = () => {
         return;
       }
 
-      const newCharacterPositionX = targetTabElement.offsetLeft - firstTabElement.offsetLeft;
+      const newMarioPositionX = targetTabElement.offsetLeft - firstTabElement.offsetLeft;
       const xPositionDifference = targetTabElement.offsetLeft - activeTabElement.offsetLeft;
       const distance = Math.abs(xPositionDifference);
-      const newCharacterAnimationDuration =
-        distance * Constants.CHARACTER_ANIMATION_DURATION_MULTIPLIER;
+      const newMarioAnimationDuration = distance * Constants.MARIO_ANIMATION_DURATION_MULTIPLIER;
 
       setActiveTabIndex(index);
-      setCharacterPositionX(newCharacterPositionX);
+      setMarioPositionX(newMarioPositionX);
 
       if (showAnimation) {
-        setCharacterAnimationDuartion(newCharacterAnimationDuration);
-        setCharacterAnimation(
-          xPositionDifference > 0 ? CharacterAnimation.RunningRight : CharacterAnimation.RunningLeft
+        setMarioAnimationDuartion(newMarioAnimationDuration);
+        setMarioAnimation(
+          xPositionDifference > 0 ? MarioAnimation.RunningRight : MarioAnimation.RunningLeft
         );
       }
     }
   };
 
-  const handleMouseEnter = (index: number) => {
-    if (isCharacterRunning() || index === activeTabIndex) {
+  const handleTabMouseEnter = (index: number) => {
+    if (isMarioRunning() || index === activeTabIndex) {
       return;
     }
-    setCharacterAnimation(
-      index < activeTabIndex ? CharacterAnimation.LookLeft : CharacterAnimation.LookRight
-    );
-
-    if (coinAnimationTimeout) {
-      clearTimeout(coinAnimationTimeout);
-      setCoinAnimationTimeout(null);
-    }
+    setMarioAnimation(index < activeTabIndex ? MarioAnimation.LookLeft : MarioAnimation.LookRight);
     setActiveCoinIndex(index);
   };
 
-  const handleMouseLeave = (index: number) => {
-    if (isCharacterRunning()) {
+  const handleTabMouseLeave = (index: number) => {
+    if (isMarioRunning()) {
       return;
     }
-    setCharacterAnimation(CharacterAnimation.Idle);
+    setMarioAnimation(MarioAnimation.Idle);
   };
 
-  const handleCharacterTransitionEnd = () => {
-    setCharacterAnimation(CharacterAnimation.Idle);
+  const handleMarioTransitionEnd = () => {
+    setMarioAnimation(MarioAnimation.Idle);
     if (activeCoinIndex === activeTabIndex) {
-      setCoinPositionY(Constants.COIN_BOUNCE_START_POSITION_Y);
+      setCoinPositionY(Constants.COIN_BOUNCE_UP_POSITION_Y);
     }
   };
 
   const handleCoinTransitionEnd = () => {
-    if (
-      activeCoinIndex === activeTabIndex &&
-      coinPositionY !== Constants.COIN_BOUNCE_END_POSITION_Y &&
-      characterAnimation === CharacterAnimation.Idle
-    ) {
+    if (isCoinBounceEnded()) {
       setActiveCoinIndex(-1);
-      setCoinPositionY(Constants.COIN_BOUNCE_END_POSITION_Y);
+      setCoinPositionY(Constants.COIN_BOUNCE_DOWN_POSITION_Y);
     }
   };
 
-  const isCharacterRunning = () =>
-    characterAnimation === CharacterAnimation.RunningLeft ||
-    characterAnimation === CharacterAnimation.RunningRight;
+  const isMarioRunning = () =>
+    marioAnimation === MarioAnimation.RunningLeft || marioAnimation === MarioAnimation.RunningRight;
+
+  const isMarioStoppedOnCoin = (tabIndex: number) =>
+    activeCoinIndex === activeTabIndex &&
+    activeCoinIndex === tabIndex &&
+    marioAnimation === MarioAnimation.Idle;
+
+  const isCoinBounceEnded = () =>
+    activeCoinIndex === activeTabIndex &&
+    coinPositionY !== Constants.COIN_BOUNCE_DOWN_POSITION_Y &&
+    marioAnimation === MarioAnimation.Idle;
+
+  const isCoinShown = (tabIndex: number) => activeCoinIndex === tabIndex;
 
   return (
-    <div id='navbar' className={'fixed top-0 z-50 w-full h-[50px]'}>
+    <nav id='navbar' className={'fixed top-0 z-50 w-full h-[50px]'}>
       <div
         className={`absolute left-0 top-0 z-20 w-full h-full bg-midnight ${showProgressBar ? 'opacity-90' : 'opacity-80'}`}
       />
@@ -285,34 +149,31 @@ const NavBar = () => {
               tab={tab}
               index={index}
               tabsRefs={tabsRefs}
-              isActive={activeTabIndex === index && showCharacter}
+              isActive={activeTabIndex === index && showMario}
               handleTabClick={handleTabChange}
-              handleMouseEnter={handleMouseEnter}
-              handleMouseLeave={handleMouseLeave}
+              handleMouseEnter={handleTabMouseEnter}
+              handleMouseLeave={handleTabMouseLeave}
             >
               <Coin
-                tabIndex={index}
-                activeCoinIndex={activeCoinIndex}
-                activeTabIndex={activeTabIndex}
+                showCoin={isCoinShown(index)}
+                showCoinBounce={isMarioStoppedOnCoin(index)}
                 coinPositionY={coinPositionY}
-                characterAnimation={characterAnimation}
                 handleCoinTransitionEnd={handleCoinTransitionEnd}
               />
             </Tab>
           ))}
-          <Character
-            showCharacter={showCharacter}
-            characterRef={characterRef}
-            characterAnimation={characterAnimation}
-            characterPositionX={characterPositionX}
-            characterAnimationDuration={characterAnimationDuration}
-            handleCharacterTransitionEnd={handleCharacterTransitionEnd}
+          <Mario
+            showMario={showMario}
+            marioRef={marioRef}
+            marioAnimation={marioAnimation}
+            marioPositionX={marioPositionX}
+            marioAnimationDuration={marioAnimationDuration}
+            handleMarioTransitionEnd={handleMarioTransitionEnd}
           />
         </div>
-        {/* NOTE: Add a platform? (glass ground) */}
       </div>
       <ProgressBar scrollProgress={scrollProgress} showProgressBar={showProgressBar} />
-    </div>
+    </nav>
   );
 };
 

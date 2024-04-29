@@ -1,4 +1,4 @@
-enum CharacterAnimation {
+enum MarioAnimation {
   Idle,
   LookLeft,
   LookRight,
@@ -24,21 +24,19 @@ interface NavTabProps {
 }
 
 interface CoinProps {
-  tabIndex: number;
-  activeTabIndex: number;
-  activeCoinIndex: number;
+  showCoin: boolean;
+  showCoinBounce: boolean;
   coinPositionY: number;
-  characterAnimation: CharacterAnimation;
   handleCoinTransitionEnd: () => void;
 }
 
-interface CharacterProps {
-  showCharacter: boolean;
-  characterRef: React.RefObject<HTMLImageElement>;
-  characterAnimation: CharacterAnimation;
-  characterAnimationDuration: number;
-  characterPositionX: number;
-  handleCharacterTransitionEnd: () => void;
+interface MarioProps {
+  showMario: boolean;
+  marioRef: React.RefObject<HTMLImageElement>;
+  marioAnimation: MarioAnimation;
+  marioAnimationDuration: number;
+  marioPositionX: number;
+  handleMarioTransitionEnd: () => void;
 }
 
 interface ProgressBarProps {
@@ -46,6 +44,6 @@ interface ProgressBarProps {
   showProgressBar: boolean;
 }
 
-export type { NavTab, NavTabProps, CoinProps, CharacterProps, ProgressBarProps };
+export type { NavTab, NavTabProps, CoinProps, MarioProps, ProgressBarProps };
 
-export { CharacterAnimation };
+export { MarioAnimation };
