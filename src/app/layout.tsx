@@ -1,13 +1,10 @@
 import type { Metadata } from 'next';
-// import { Inter } from 'next/font/google';
 import { NavBar } from '@/components';
 import './globals.css';
 
-// const inter = Inter({ subsets: ['latin'] });
-
 export const metadata: Metadata = {
   title: "Alfred Tse's Website",
-  description: ''
+  description: 'A mario-theme interactive personal website for projects display and contact'
 };
 
 export default function RootLayout({

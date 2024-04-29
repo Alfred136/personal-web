@@ -8,13 +8,13 @@ const Intro = () => {
       <div className='w-full pb-6 flex flex-col text-[15px] ss:text-[16px]'>
         <span className='mb-2'>{Constants.INTRO_SLOGAN}</span>
 
-        {Constants.INTRO_POINT_FORMS.map((item) => (
+        {Constants.INTRO_POINT_FORMS.map((pointform) => (
           <PointForm
-            key={item.id}
-            emoji={item.emoji}
-            statement={item.statement}
-            question={item.question}
-            answer={item.answer}
+            key={pointform.id}
+            emoji={pointform.emoji}
+            statement={pointform.statement}
+            question={pointform.question}
+            answer={pointform.answer}
           />
         ))}
       </div>

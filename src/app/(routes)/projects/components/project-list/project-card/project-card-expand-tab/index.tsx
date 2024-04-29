@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import * as Constants from '@/app/(routes)/projects/components/project-list/project-card/constants';
 import type { ProjectCardExpandTabProps } from '@/app/(routes)/projects/components/project-list/project-card/types';
-import { pointingFingerDownGif } from '#/images/common';
 
 const ProjectCardExpandTab = (props: ProjectCardExpandTabProps) => {
   const { handleExpandButtonClick } = props;
@@ -12,8 +11,8 @@ const ProjectCardExpandTab = (props: ProjectCardExpandTabProps) => {
       onClick={handleExpandButtonClick}
     >
       <Image
-        src={pointingFingerDownGif} //todo png
-        alt='pixel-art pointing finger'
+        src={Constants.FINGER_IMAGE_SRC}
+        alt={Constants.FINGER_IMAGE_ALT}
         width={Constants.FINGER_IMAGE_WIDTH}
         height={Constants.FINGER_IMAGE_HEIGHT}
         unoptimized={true}

@@ -5,7 +5,7 @@ import type { UseFormRegister, FieldValues, Path } from 'react-hook-form';
 
 type ContactFormSchema = output<typeof contactFormSchema>;
 
-interface FormFieldProps {
+interface FormFieldContainerProps {
   labelName: string;
   children: React.ReactNode;
 }
@@ -21,7 +21,7 @@ interface FormFieldInputProps<T extends FieldValues> extends FormFieldElementPro
 
 interface FormFieldTextAreaProps<T extends FieldValues> extends FormFieldElementProps<T> {}
 
-interface FormFieldMessageProps {
+interface FormFieldErrorMessageProps {
   message?: string;
 }
 
@@ -40,11 +40,10 @@ interface FormSubmitOutput {
 export type {
   ContactFormSchema,
   FormSubmitOutput,
-  FormFieldProps,
-  FormFieldElementProps,
+  FormFieldContainerProps,
+  FormFieldErrorMessageProps,
   FormFieldInputProps,
-  FormFieldTextAreaProps,
-  FormFieldMessageProps
+  FormFieldTextAreaProps
 };
 
 export { FormSubmitStatus };
