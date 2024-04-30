@@ -40,7 +40,7 @@ const PROJECTS: Project[] = [
       with reponsive UI supporting desktop, tablet and mobile devices.`,
     imageSource: projectOldPortfolioJpg,
     githubURL: 'https://github.com/Alfred136/portfolio-web',
-    demoURL: 'https://AlfredTse.vercel.app/',
+    demoURL: 'https://alfred-old-portfolio.vercel.app/',
     techStack: ['Next.js', 'Tailwindcss', 'Typescript']
   },
   {
