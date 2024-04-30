@@ -20,7 +20,6 @@ const InteractiveLinks = () => {
   const handleBlock2Click = () => {
     if (showBlock2Item) return;
 
-    console.log('block2HitCounter', block2HitCounter);
     if (block2HitCounter === 0) {
       setDialogueText('One more time!');
     } else if (block2HitCounter === 1) {

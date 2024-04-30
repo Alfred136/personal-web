@@ -1,6 +1,6 @@
-// todo: change images to jpeg (optimize images loading)
-import projectFlamingoPng from './flamingo.png';
-import projectOldPortfolioPng from './old-portfolio.png';
-import projectSpli3ePng from './spli3e.png';
+import projectPersonalWebsiteJpg from './personal-website.jpg';
+import projectFlamingoJpg from './flamingo.jpg';
+import projectOldPortfolioJpg from './old-portfolio.jpg';
+import projectSpli3eJpg from './spli3e.jpg';
 
-export { projectFlamingoPng, projectOldPortfolioPng, projectSpli3ePng };
+export { projectPersonalWebsiteJpg, projectFlamingoJpg, projectOldPortfolioJpg, projectSpli3eJpg };
