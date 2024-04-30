@@ -10,7 +10,7 @@ import { FormFieldContainer } from './form-field-container';
 import { FormFieldErrorMessage } from './form-field-error-message';
 import { FormFieldInput } from './form-field-input';
 import { FormFieldTextArea } from './form-field-textarea';
-import { useSubmitForm } from './hooks';
+import { useFormSubmit } from './use-form-submit';
 import { useEffect } from 'react';
 
 const ContactForm = () => {
@@ -23,7 +23,7 @@ const ContactForm = () => {
     resolver: zodResolver(contactFormSchema),
     defaultValues: Constants.CONTACT_FORM_DEFAULT_VALUES
   });
-  const { onSubmit, isSubmitSuccessful } = useSubmitForm(reset);
+  const { onSubmit, isSubmitSuccessful } = useFormSubmit(reset);
 
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {

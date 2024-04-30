@@ -1,5 +1,5 @@
 import { Intro, Story, Skills } from './components';
-import { Background } from '@/components';
+import { BackgroundImage } from '@/components';
 
 const AboutPage = () => {
   return (
@@ -16,7 +16,7 @@ const AboutPage = () => {
         <Story />
       </section>
 
-      <Background />
+      <BackgroundImage />
     </main>
   );
 };

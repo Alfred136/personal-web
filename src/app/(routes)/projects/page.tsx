@@ -1,5 +1,5 @@
 import { ProjectList } from './components';
-import { Background } from '@/components';
+import { BackgroundImage } from '@/components';
 
 const ProjectsPage = () => {
   return (
@@ -8,7 +8,7 @@ const ProjectsPage = () => {
         <ProjectList />
       </section>
 
-      <Background />
+      <BackgroundImage />
     </main>
   );
 };

@@ -1,5 +1,5 @@
 import type { FieldValues } from 'react-hook-form';
-import type { FormFieldInputProps } from '@/app/(routes)/contact/components/contact-form/types';
+import type { FormFieldInputProps } from './types';
 
 const FormFieldInput = <T extends FieldValues>(props: FormFieldInputProps<T>) => {
   const { register, name, type } = props;

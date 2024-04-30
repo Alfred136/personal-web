@@ -20,11 +20,10 @@ const InteractiveLinks = () => {
   const handleBlock2Click = () => {
     if (showBlock2Item) return;
 
+    console.log('block2HitCounter', block2HitCounter);
     if (block2HitCounter === 0) {
-      setDialogueText("What's inside?");
-    } else if (block2HitCounter === 1) {
       setDialogueText('One more time!');
-    } else if (block2HitCounter === 2) {
+    } else if (block2HitCounter === 1) {
       setShowBlock2Item(true);
     }
     setBlock2HitCounter((prev) => prev + 1);
@@ -70,7 +69,7 @@ const InteractiveLinks = () => {
           setDialogueText={setDialogueText}
         />
       </div>
-      <span className='font-subheading text-[24px] text-afternoon'>{dialogueText}</span>
+      <span className='font-subheading text-[32px] text-afternoon'>{dialogueText}</span>
     </div>
   );
 };

@@ -1,5 +1,5 @@
-import type { ProgressBarProps } from '@/components/navbar/types';
-import * as Constants from '@/components/navbar/constants';
+import * as Constants from './constants';
+import type { ProgressBarProps } from './types';
 
 const ProgressBar = (props: ProgressBarProps) => {
   const { scrollProgress, showProgressBar } = props;

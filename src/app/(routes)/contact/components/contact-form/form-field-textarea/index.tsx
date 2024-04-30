@@ -1,5 +1,5 @@
 import type { FieldValues } from 'react-hook-form';
-import type { FormFieldTextAreaProps } from '@/app/(routes)/contact/components/contact-form/types';
+import type { FormFieldTextAreaProps } from './types';
 
 const FormFieldTextArea = <T extends FieldValues>(props: FormFieldTextAreaProps<T>) => {
   const { register, name } = props;

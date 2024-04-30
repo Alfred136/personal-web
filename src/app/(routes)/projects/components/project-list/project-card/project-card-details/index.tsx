@@ -1,5 +1,5 @@
-import * as Constants from '@/app/(routes)/projects/components/project-list/project-card/constants';
-import type { ProjectCardDetailsProps } from '@/app/(routes)/projects/components/project-list/project-card/types';
+import * as Constants from './constants';
+import type { ProjectCardDetailsProps } from './types';
 import { Button } from '@/components';
 
 const ProjectCardDetailsTechTag = (props: { label: string }) => {

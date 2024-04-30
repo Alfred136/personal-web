@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useIsScreenSize } from '@/hooks/use-is-screen-size';
+import { useIsScreenSize } from '@/hooks';
 import { ProjectCardImage } from './project-card-image';
 import { ProjectCardDetails } from './project-card-details';
 import { ProjectCardExpandTab } from './project-card-expand-tab';

@@ -1,6 +1,6 @@
-import { Background } from './background';
+import { BackgroundImage } from './background-image';
 import { Button } from './button';
 import { CodeSnippet } from './code-snippet';
 import { NavBar } from './navbar';
 
-export { Background, Button, CodeSnippet, NavBar };
+export { BackgroundImage, Button, CodeSnippet, NavBar };

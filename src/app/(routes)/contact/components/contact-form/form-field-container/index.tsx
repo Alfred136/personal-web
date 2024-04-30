@@ -1,4 +1,4 @@
-import type { FormFieldContainerProps } from '@/app/(routes)/contact/components/contact-form/types';
+import type { FormFieldContainerProps } from './types';
 
 const FormFieldContainer = (props: FormFieldContainerProps) => {
   const { labelName, children } = props;

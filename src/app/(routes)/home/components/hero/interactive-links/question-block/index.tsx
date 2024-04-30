@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import * as Constants from './constants';
 import { type QuestionBlockProps, QuestionBlockAnimation } from './types';
-import './index.css';
+import './styles.css';
 
 /**
  * A clickable, animated link (questipon block)

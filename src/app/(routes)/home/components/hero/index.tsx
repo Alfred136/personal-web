@@ -1,5 +1,5 @@
+import { AnimatedBackground } from './animated-background';
 import { AnimatedGreeting } from './animated-greeting';
-import { Background } from './background';
 import { Headline } from './headline';
 import { InteractiveLinks } from './interactive-links';
 
@@ -15,7 +15,7 @@ const Hero = () => {
         <Headline />
         <InteractiveLinks />
       </div>
-      <Background />
+      <AnimatedBackground />
     </>
   );
 };

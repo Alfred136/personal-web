@@ -5,7 +5,6 @@ const ProjectList = () => {
   return (
     <div className='flex flex-col gap-4 overflow-hidden'>
       <h2>{Constants.HEADING}</h2>
-      {/* project items container */}
       <div className='w-full pb-10 flex flex-col items-stretch justify-between gap-[100px]'>
         {Constants.PROJECTS.map((project) => (
           <ProjectCard

@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import * as Constants from '@/app/(routes)/projects/components/project-list/project-card/constants';
-import type { ProjectCardImageProps } from '@/app/(routes)/projects/components/project-list/project-card/types';
+import * as Constants from './constants';
+import type { ProjectCardImageProps } from './types';
 
 const ProjectCardImage = (props: ProjectCardImageProps) => {
   const { src, alt, isDarken } = props;

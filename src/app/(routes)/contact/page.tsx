@@ -1,5 +1,5 @@
 import { ContactForm } from './components/contact-form';
-import { Background } from '@/components';
+import { BackgroundImage } from '@/components';
 
 const ContactPage = () => {
   return (
@@ -8,7 +8,7 @@ const ContactPage = () => {
         <ContactForm />
       </section>
 
-      <Background />
+      <BackgroundImage />
     </main>
   );
 };

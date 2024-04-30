@@ -1,4 +1,4 @@
-import type { FormFieldErrorMessageProps } from '@/app/(routes)/contact/components/contact-form/types';
+import type { FormFieldErrorMessageProps } from './types';
 
 const FormFieldErrorMessage = (props: FormFieldErrorMessageProps) => {
   const { message } = props;
