@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { NavBar } from '@/components';
 import './globals.css';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export const metadata: Metadata = {
   title: "Alfred Tse's Website",
@@ -17,6 +19,8 @@ export default function RootLayout({
       <body>
         <NavBar />
         {children}
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
