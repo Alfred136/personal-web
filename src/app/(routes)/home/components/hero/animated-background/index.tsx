@@ -11,7 +11,7 @@ const AnimatedBackground = () => {
       priority={true}
       unoptimized={true}
       className='absolute top-0 left-0 z-[0] w-full h-full 
-        object-cover object-bottom brightness-[0.3] opacity-80'
+        object-cover object-bottom brightness-[0.35] opacity-80'
     />
   );
 };
