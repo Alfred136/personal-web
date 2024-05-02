@@ -30,6 +30,7 @@ const POST = async (request: NextRequest) => {
 
     return new NextResponse(JSON.stringify({}), { status: 200 });
   } catch (error) {
+    console.error(error, (error as Error).message);
     return new NextResponse(JSON.stringify({}), { status: 500 });
   }
 };
