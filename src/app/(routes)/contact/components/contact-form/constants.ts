@@ -1,5 +1,5 @@
 import type { DefaultValues } from 'react-hook-form';
-import { type ContactFormSchema, FormSubmitStatus } from './types';
+import type { ContactFormSchema } from './types';
 
 const HEADING: string = 'Send me a message!';
 const CONFIRM_MESSAGE: string = 'Confirm sending this message?';
@@ -11,10 +11,11 @@ const CONTACT_FORM_DEFAULT_VALUES: DefaultValues<ContactFormSchema> = {
   email: '',
   message: ''
 };
-const FORM_SUBMIT_MESSGAE: Record<FormSubmitStatus, string> = {
-  [FormSubmitStatus.Invalid]: 'Invalid form input. Please try again.',
-  [FormSubmitStatus.Failed]: 'Failed to send message :(',
-  [FormSubmitStatus.Succeeded]: "Thank you for your message! I'll get back to you soon."
+
+const CONTACT_FORM_SUBMIT_MESSAGE: Record<number, string> = {
+  200: "Thank you for your message! I'll get back to you soon.",
+  400: 'Invalid form input. Please try again.',
+  500: 'Internal server error. Failed to send message.'
 };
 
 export {
@@ -23,5 +24,5 @@ export {
   SENT_MESSAGE,
   EMAIL_SUBJECT,
   CONTACT_FORM_DEFAULT_VALUES,
-  FORM_SUBMIT_MESSGAE
+  CONTACT_FORM_SUBMIT_MESSAGE
 };

@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { UseFormReset } from 'react-hook-form';
-import * as Constants from '@/app/(routes)/contact/components/contact-form/constants';
 import type { ContactFormSchema } from '@/app/(routes)/contact/components/contact-form/types';
-import { submitForm } from '@/app/(routes)/contact/components/contact-form/submit';
+import * as Constants from '@/app/(routes)/contact/components/contact-form/constants';
 
 const useFormSubmit = (reset: UseFormReset<ContactFormSchema>) => {
   const [isSubmitSuccessful, setIsSubmitSuccessful] = useState(false);
@@ -14,15 +13,26 @@ const useFormSubmit = (reset: UseFormReset<ContactFormSchema>) => {
   }, [isSubmitSuccessful, reset]);
 
   const onSubmit = async (data: ContactFormSchema) => {
-    const formData = new FormData();
-    formData.append('name', data.name);
-    formData.append('email', data.email);
-    formData.append('message', data.message);
-
-    if (confirm(Constants.CONFIRM_MESSAGE)) {
-      const { isSuccessful, status } = await submitForm(formData);
-      alert(Constants.FORM_SUBMIT_MESSGAE[status]);
-      setIsSubmitSuccessful(isSuccessful);
+    try {
+      if (confirm(Constants.CONFIRM_MESSAGE)) {
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          body: JSON.stringify(data),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        if (response.status === 200) {
+          alert(Constants.CONTACT_FORM_SUBMIT_MESSAGE[200]);
+          setIsSubmitSuccessful(true);
+        } else {
+          alert(Constants.CONTACT_FORM_SUBMIT_MESSAGE[response.status]);
+          setIsSubmitSuccessful(false);
+        }
+      }
+    } catch (error) {
+      alert((error as Error).message);
+      setIsSubmitSuccessful(false);
     }
   };
 
