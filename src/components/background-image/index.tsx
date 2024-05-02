@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import * as Constants from './constant';
+import * as Constants from './constants';
 
 const BackgroundImage = () => {
   return (
