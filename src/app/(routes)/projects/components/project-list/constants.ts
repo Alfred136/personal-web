@@ -2,6 +2,7 @@ import type { Project } from './types';
 import {
   projectPersonalWebsiteJpg,
   projectFlamingoJpg,
+  project3dMapMallJpg,
   projectSpli3eJpg,
   projectOldPortfolioJpg
 } from '#/images/projects';
@@ -21,16 +22,15 @@ const PROJECTS: Project[] = [
     techStack: ['Next.js', 'Sanity', 'Stripe', 'Tailwindcss', 'JavaScript']
   },
   {
-    id: 'pj-personal-website',
-    name: 'This Website :)',
-    overview: 'A mario-theme interactive personal website',
-    description: `Welcome to the site you are now exploring, where a pixel-art Mario theme adorns a playful
-      and captivating UI/UX design while maintaining an intuitive and user-friendly experience. 
-      This project is developed using Agile approach and the code is modular and scalable.`,
-    imageSource: projectPersonalWebsiteJpg,
-    githubURL: 'https://github.com/Alfred136/personal-web',
-    demoURL: '/',
-    techStack: ['Next.js', 'Tailwindcss', 'Typescript']
+    id: 'pj-3d-map-mall',
+    name: 'Demo Indoor 3D Map',
+    overview: 'An interactive indoor 3D map',
+    description: `This is a demo 3D map imported from the MappedIn Platform, including features like mouse 
+      events effects, zooming, wayfinding, search, and more. This project uses React and MappedIn Web SDK.`,
+    imageSource: project3dMapMallJpg,
+    githubURL: 'https://github.com/Alfred136/project-3d-map-mall',
+    demoURL: 'https://project-3d-map-mall.vercel.app',
+    techStack: ['React', 'Tailwindcss', 'MappedIn Web SDK']
   },
   {
     id: 'pj-old-portfolio',
